@@ -11,7 +11,7 @@
     <h3 style="font-weight: 400;">by <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a></h3>
 
     <p>
-        This site is a frontend to display the contents of <a href="/data.json">this JSON file</a>, which contains submissions I've made to <a href="https://leetcode.com">LeetCode</a>.
+        This site is a frontend to display the contents of a JSON file like <a href="/data.json">this one</a>, which contains submissions I've made to <a href="https://leetcode.com">LeetCode</a>.
     </p>
 
     <p>
@@ -19,6 +19,20 @@
     </p>
 
     <p>
+        Additionally, there is a process to submit new solutions via a Discord webhook. I have a DigitalOcean droplet running a website that I use for this (among other things). The droplet has a Discord bot running on it that detects webhook (and manual) messages, and adds them to the authoritative JSON file. This JSON file on the website is explicitly served by nginx and allows Cross-Origin Resource Sharing (CORS) so that it can be referenced on this static site.
+    </p>
+
+    <p>
+        To submit new solutions, there is a static page which requires the user to enter a Discord webhook URL to send the generated submission JSON fragment to a specific Discord channel, so that it can be picked up by the bot.
+    </p>
+
+    <p>
+        <a href="/submit.html">Submit a solution</a>
+    </p>
+
+    <p>
         <a href="/">Return to problem set overview</a>
     </p>
 </div>
+
+<p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a></p>
