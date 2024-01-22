@@ -22,23 +22,3 @@
         <a href="/">Return to problem set overview</a>
     </p>
 </div>
-
-<script>
-    async function retrieveData() {
-        const response = await fetch('./data.json');
-        const data = await response.json();
-        // console.log(data);
-        return data;
-    }
-
-    function notFound(problemID) {
-        const url = new URL(window.location.href);
-        window.location = url.origin + '/404.html';
-    }
-
-
-
-    retrieveData().then((data) => {
-        const url = new URL(window.location.href);
-    });
-</script>
