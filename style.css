@@ -40,8 +40,20 @@ body {
     overflow-x: auto;
 }
 
+.language {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
 .date {
     font-size: large;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .tag {
@@ -57,6 +69,12 @@ body {
     position: relative;
     top: -5px;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.tags {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
@@ -139,6 +157,8 @@ body {
 th {
     white-space: nowrap;
     text-align: left;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 td {

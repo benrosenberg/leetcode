@@ -82,7 +82,7 @@
             tagTag.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag}</span></a> `
         });
         codeTag = document.getElementById('solution');
-        codeTag.innerHTML = `<a style="text-decoration: underline; text-underline-offset: 4px;" onclick="goToLanguage('${problemData.language}')">${capitalizeFirstLetter(problemData.language)}</a><pre><code class="language-${problemData.language}">${problemData.solution}</code></pre>`
+        codeTag.innerHTML = `<a class="language" onclick="goToLanguage('${problemData.language}')">${capitalizeFirstLetter(problemData.language)}</a><pre><code class="language-${problemData.language}">${problemData.solution}</code></pre>`
     }
 
     function getPrevProblem(data, problemData) {
