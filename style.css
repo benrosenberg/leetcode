@@ -15,7 +15,10 @@ body {
 }
 
 .difficulty {
-
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .easy {
@@ -53,6 +56,10 @@ body {
     padding-top: 3px;
     position: relative;
     top: -5px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .disabled {
@@ -117,12 +124,16 @@ body {
 
     .navbutton {
         font-size:medium;
-      }
+    }
 }
 
 .table-link {
     text-decoration: underline;
     text-underline-offset: 4px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 th {
@@ -132,10 +143,18 @@ th {
 
 td {
     padding-bottom: 1%;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 td:last-child {
     white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .problem-table {
