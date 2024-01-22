@@ -1,0 +1,175 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>LeetCode Solutions</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+  </head>
+
+<div class="page">
+<div class="content">
+    <h1 id="title" class="title"></h1>
+
+    <h3 id="difficulty"></h3>
+
+    <h4 id="date" class="date"></h4>
+
+    <p id="tags" class="tags"></p>
+
+    <div class="code" id="solution"></div>
+</div>
+
+<div class="bottom-nav">
+    <table style="width: 100%">
+        <tr><td id="leftnav"><button id="leftnavbutton" class="navbutton"><span class="arrow">🡠</span> <span id="leftnavtext"></span></button></td><td style="text-align: right;" id="rightnav"><button id="rightnavbutton" class="navbutton"><span id="rightnavtext"></span> <span class="arrow">🡢</span></button></td></tr>
+    </table>
+</div>
+</div>
+
+<p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a></p>
+
+<script>
+    async function retrieveData() {
+        const response = await fetch('./data.json');
+        const data = await response.json();
+        // console.log(data);
+        return data;
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function problemNotFound(problemID) {
+        const url = new URL(window.location.href);
+        window.location = url.origin + `/404.html?problem=${problemID}`;
+    }
+
+    function goToTag(tag) {
+        // go to overview and only get problems with that tag
+        const url = new URL(window.location.href);
+        window.location = url.origin + `/?tag=${tag}`;
+    }
+
+    function goToDifficulty(difficulty) {
+        const url = new URL(window.location.href);
+        window.location = url.origin + `/?difficulty=${difficulty}`;
+    }
+
+    function goToLanguage(language) {
+        const url = new URL(window.location.href);
+        window.location = url.origin + `/?language=${language}`;
+    }
+
+    function goToOverview() {
+        const url = new URL(window.location.href);
+        window.location = url.origin;
+    }
+
+    function getProblemTitle(problemData) {
+        return problemData.number + '. ' + problemData.title;
+    }
+
+    function populate(problemData) {
+        // fill in current problem data
+        titleTag = document.getElementById('title');
+        titleTag.innerHTML = getProblemTitle(problemData);
+        difficultyTag = document.getElementById('difficulty');
+        difficultyTag.innerHTML = `<a onclick="goToDifficulty('${problemData.difficulty}')"><span class="difficulty ${problemData.difficulty}">${capitalizeFirstLetter(problemData.difficulty)}</span>`;
+        dateTag = document.getElementById('date');
+        dateTag.innerHTML = 'solved on ' + problemData.date;
+        tagTag = document.getElementById('tags');
+        problemData.tags.forEach(tag => {
+            tagTag.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag}</span></a> `
+        });
+        codeTag = document.getElementById('solution');
+        codeTag.innerHTML = `<a style="text-decoration: underline; text-underline-offset: 4px;" onclick="goToLanguage('${problemData.language}')">${capitalizeFirstLetter(problemData.language)}</a><pre><code class="language-${problemData.language}">${problemData.solution}</code></pre>`
+    }
+
+    function getPrevProblem(data, problemData) {
+        var keys = Object.keys(data);
+        keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        var currentIndex = keys.indexOf(problemData.number);
+        if (currentIndex == 0) {
+            // this problem is at the start of the list
+            return false
+        } else {
+            return data[keys[currentIndex - 1]];
+        }
+    }
+
+    function getNextProblem(data, problemData) {
+        var keys = Object.keys(data);
+        keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        var currentIndex = keys.indexOf(problemData.number);
+        if (currentIndex + 1 == keys.length) {
+            // this problem is at the end of the list
+            return false
+        } else {
+            return data[keys[currentIndex + 1]];
+        }
+    }
+
+    function goToProblem(problemID) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("problem", problemID);
+        window.location = url;
+    }
+
+    function populatePrevAndNextButtons(data, problemData) {
+        const url = new URL(window.location);
+        // determine whether there are prev/next problems in the dataset
+        prevProblem = getPrevProblem(data, problemData);
+        nextProblem = getNextProblem(data, problemData);
+        // populate previous and next problem slots
+        if (prevProblem != false) {
+            prevButtonText = document.getElementById("leftnavtext");
+            prevButtonText.innerHTML = getProblemTitle(prevProblem);
+            prevButton = document.getElementById("leftnavbutton");
+            prevButton.setAttribute("onclick", `goToProblem(${prevProblem.number});`);
+        } else {
+            // redirect to overview page if no prev problem
+            prevButtonText = document.getElementById("leftnavtext");
+            prevButtonText.innerHTML = "Overview";
+            prevButton = document.getElementById("leftnavbutton");
+            prevButton.setAttribute("onclick", "goToOverview();");
+        }
+        if (nextProblem != false) {
+            nextButtonText = document.getElementById("rightnavtext");
+            nextButtonText.innerHTML = getProblemTitle(nextProblem);
+            nextButton = document.getElementById("rightnavbutton");
+            nextButton.setAttribute("onclick", `goToProblem(${nextProblem.number});`);
+        } else {
+            // redirect to overview page if no next problem
+            nextButtonText = document.getElementById("rightnavtext");
+            nextButtonText.innerHTML = "Overview";
+            nextButton = document.getElementById("rightnavbutton");
+            nextButton.setAttribute("onclick", "goToOverview();");
+        }
+    }
+
+    retrieveData().then((data) => {
+        if (window.location) {
+            const url = new URL(window.location.href);
+
+            // problems
+            const problemID = url.searchParams.get("problem");
+            if (problemID != null) {
+                if (!data.hasOwnProperty(problemID)) {
+                    problemNotFound(problemID);
+                } else if (problemID != null) {
+                    populate(data[problemID])
+                    populatePrevAndNextButtons(data, data[problemID]);
+                }
+            }
+
+            // if no problem found just go to overview
+            if (problemID == null) {
+                goToOverview();
+            }
+        } else {
+            // no window location found? return overview page
+            goToOverview();
+        }
+        
+    });
+</script>
