@@ -6,12 +6,15 @@
   </head>
 
 <div class="content">
-    <h1 id="title" class="title">About</h1>
+    <div id="header">
+        <h1 id="title" class="title">About</h1>
+        <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
+    </div>
 
-    <h3 style="font-weight: 400;">by <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a></h3>
+    <h3 style="font-weight: 400;">by <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></h3>
 
     <p>
-        This site is a frontend to display the contents of a JSON file like <a href="/data.json">this one</a>, which contains submissions I've made to <a href="https://leetcode.com">LeetCode</a>.
+        This site is a frontend to display the contents of a JSON file like this one: <a href="/data.json" class="link">example</a>, which contains submissions I've made to <a href="https://leetcode.com"  class="link">LeetCode</a>.
     </p>
 
     <p>
@@ -27,12 +30,14 @@
     </p>
 
     <p>
-        <a href="/submit.html">Submit a solution</a>
+        <a href="/submit.html" class="link">Submit a solution</a>
     </p>
 
     <p>
-        <a href="/">Return to problem set overview</a>
+        <a href="/" class="link">Return to problem set overview</a>
     </p>
 </div>
 
-<p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a></p>
+<p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></p>
+
+<script src="theme.js"></script>

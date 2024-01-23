@@ -1,182 +1,243 @@
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <title>LeetCode Solutions</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
-  </head>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=yes"
+  />
+  <title>LeetCode Solutions</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+</head>
 
 <div class="page">
-<div class="content">
-    <h1 id="title" class="title"><a href="/" style="color: black; text-decoration: none;">LeetCode Solutions</a></h1>
+  <div class="content">
+    <div id="header">
+        <h1 id="title" class="title">
+            <a href="/" class="overview-title"
+              >LeetCode Solutions</a
+            >
+          </h1>
+          <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
+    </div>
 
-    <h4 style="font-weight: 400;">by <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a> | <a style="color: black;" href="about.html">About this site</a> | <a style="color: black;" href="submit.html">Submit a solution</a></h4>
+    <h4 style="font-weight: 400">
+      by
+      <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
+      | <a class="link" href="about.html">About this site</a> |
+      <a class="link" href="submit.html">Submit a solution</a>
+    </h4>
 
     <h4 id="last-updated" class="date"></h4>
 
-    <p style="display: none;" id="tag-filter">Filtering to problems tagged as: </p>
-    <p style="display: none;" id="difficulty-filter">Filtering to problems of difficulty: </p>
-    <p style="display: none;" id="language-filter">Filtering to problems solved in: </p>
+    <p style="display: none" id="tag-filter">
+      Filtering to problems tagged as:
+    </p>
+    <p style="display: none" id="difficulty-filter">
+      Filtering to problems of difficulty:
+    </p>
+    <p style="display: none" id="language-filter">
+      Filtering to problems solved in:
+    </p>
+    <p style="display: none; font-size: medium" id="see-all">
+      <a href="/" class="link"> See all</a>
+    </p>
 
     <table id="problemTable" class="problem-table" cellpadding="10">
-        <tr>
-            <th>Problem</th>
-            <th>Difficulty</th>
-            <th>Date solved</th>
-            <th>Language</th>
-            <th>Tags</th>
-        </tr>
+      <tr>
+        <th>Problem</th>
+        <th>Difficulty</th>
+        <th>Date solved</th>
+        <th>Language</th>
+        <th>Tags</th>
+      </tr>
     </table>
+  </div>
 </div>
 
-</div>
-
-<p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" style="color: black;">Ben Rosenberg</a></p>
+<p class="bottom-text">
+  © 2024-20XX
+  <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a>
+</p>
 
 <script>
-    async function retrieveData() {
-        const response = await fetch('https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json');
-        const data = await response.json();
-        // console.log(data);
-        return data;
-    }
+  async function retrieveData() {
+    const response = await fetch(
+      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json"
+    );
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  }
 
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
-    function notFound(problemID) {
-        const url = new URL(window.location.href);
-        window.location = url.origin + '/404.html';
-    }
+  function notFound(problemID) {
+    const url = new URL(window.location.href);
+    window.location = url.origin + "/404.html";
+  }
 
-    function goToProblem(problemID) {
-        const url = new URL(window.location.origin + '/problem.html');
-        url.searchParams.set("problem", problemID);
-        window.location = url;
-    }
+  function goToProblem(problemID) {
+    const url = new URL(window.location.origin + "/problem.html");
+    url.searchParams.set("problem", problemID);
+    window.location = url;
+  }
 
-    function goToTag(tag) {
-        const url = new URL(window.location.origin);
-        url.searchParams.set("tag", tag);
-        window.location = url;
-    }
+  function goToTag(tag) {
+    const url = new URL(window.location.origin);
+    url.searchParams.set("tag", tag);
+    window.location = url;
+  }
 
-    function goToDifficulty(difficulty) {
-        const url = new URL(window.location.href);
-        window.location = url.origin + `/?difficulty=${difficulty}`;
-    }
+  function goToDifficulty(difficulty) {
+    const url = new URL(window.location.href);
+    window.location = url.origin + `/?difficulty=${difficulty}`;
+  }
 
-    function goToLanguage(language) {
-        const url = new URL(window.location.href);
-        window.location = url.origin + `/?language=${language}`;
-    }
+  function goToLanguage(language) {
+    const url = new URL(window.location.href);
+    window.location = url.origin + `/?language=${language}`;
+  }
 
-    function getProblemTitleLink(problemData) {
-        return `<a class="table-link" onclick="goToProblem(${problemData.number})">${problemData.number}. ${problemData.title}</a>`;
-    }
+  function getProblemTitleLink(problemData) {
+    return `<a class="table-link" onclick="goToProblem(${problemData.number})">${problemData.number}. ${problemData.title}</a>`;
+  }
 
-    function populateProblemTable(data) {
-        var table = document.getElementById("problemTable");
-        var keys = Object.keys(data);
-        keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-        keys.forEach((key) => {
-            table.innerHTML += createTableRow(data[key]);
-        });
-    }
-
-    function createTableRow(problemData) {
-        var tagCell = '';
-        var numTagsToShow = 3;
-        var tagsToShow = problemData.tags.slice(0, numTagsToShow);
-        tagsToShow.forEach((tag, tagIndex) => {
-            if (tagIndex < problemData.tags.length - 1) {
-                tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>, `;
-            } else {
-                tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>`;
-            }
-        });
-        if (problemData.tags.length > 2) {
-            tagCell += '...'
-        }
-
-        return ('<tr>'
-            + '<td>' + getProblemTitleLink(problemData) + '</td>'
-            + `<td><a onclick="goToDifficulty('${problemData.difficulty}')"><span class="difficulty ${problemData.difficulty}">${capitalizeFirstLetter(problemData.difficulty)}</span></a></td>`
-            + '<td>' + problemData.date + '</td>'
-            + `<td><a class="table-link" onclick="goToLanguage('${problemData.language}')">${capitalizeFirstLetter(problemData.language)}</a></td>`
-            + '<td>' + tagCell + '</td>'
-        + '</tr>')
-    }
-
-    function filterToTag(tag, data) {
-        const newData = [];
-        Object.keys(data).forEach((key) => {
-            if (data[key].tags.includes(tag)) {
-                newData.push(data[key]);
-            }
-        });
-        return newData;
-    }
-
-    function filterToDifficulty(difficulty, data) {
-        const newData = [];
-        Object.keys(data).forEach((key) => {
-            if (data[key].difficulty == difficulty) {
-                newData.push(data[key]);
-            }
-        });
-        return newData;
-    }
-
-    function filterToLanguage(language, data) {
-        const newData = [];
-        Object.keys(data).forEach((key) => {
-            if (data[key].language == language) {
-                newData.push(data[key]);
-            }
-        });
-        return newData;
-    }
-
-    function markAsFilteredToTag(tag) {
-        var filterText = document.getElementById('tag-filter');
-        filterText.style.display = 'initial';
-        filterText.innerText += ' ' + tag;
-    }
-
-    function markAsFilteredToDifficulty(difficulty) {
-        var filterText = document.getElementById('difficulty-filter');
-        filterText.style.display = 'initial';
-        filterText.innerHTML += ' ' + `<span class="difficulty ${difficulty}">${capitalizeFirstLetter(difficulty)}</span>`;
-    }
-
-    function markAsFilteredToLanguage(language) {
-        var filterText = document.getElementById('language-filter');
-        filterText.style.display = 'initial';
-        filterText.innerText += ' ' + capitalizeFirstLetter(language);
-    }
-
-    retrieveData().then((data) => {
-        const url = new URL(window.location.href);
-        const tag = url.searchParams.get("tag");
-        var dataToUse = data;
-        if (tag != null) {
-            dataToUse = filterToTag(tag, dataToUse);
-            markAsFilteredToTag(tag);
-        } 
-
-        const difficulty = url.searchParams.get("difficulty");
-        if (difficulty != null) {
-            dataToUse = filterToDifficulty(difficulty, dataToUse);
-            markAsFilteredToDifficulty(difficulty);
-        } 
-
-        const language = url.searchParams.get("language");
-        if (language != null) {
-            dataToUse = filterToLanguage(language, dataToUse);
-            markAsFilteredToLanguage(language);
-        } 
-
-        populateProblemTable(dataToUse);
+  function populateProblemTable(data) {
+    var table = document.getElementById("problemTable");
+    var keys = Object.keys(data);
+    keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    keys.forEach((key) => {
+      table.innerHTML += createTableRow(data[key]);
     });
+  }
+
+  function createTableRow(problemData) {
+    var tagCell = "";
+    var numTagsToShow = 3;
+    var tagsToShow = problemData.tags.slice(0, numTagsToShow);
+    tagsToShow.forEach((tag, tagIndex) => {
+      if (tagIndex < problemData.tags.length - 1) {
+        tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>, `;
+      } else {
+        tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>`;
+      }
+    });
+    if (problemData.tags.length > 2) {
+      tagCell += "...";
+    }
+
+    return (
+      "<tr>" +
+      "<td>" +
+      getProblemTitleLink(problemData) +
+      "</td>" +
+      `<td><a onclick="goToDifficulty('${
+        problemData.difficulty
+      }')"><span class="difficulty ${
+        problemData.difficulty
+      }">${capitalizeFirstLetter(problemData.difficulty)}</span></a></td>` +
+      "<td>" +
+      problemData.date +
+      "</td>" +
+      `<td><a class="table-link" onclick="goToLanguage('${
+        problemData.language
+      }')">${capitalizeFirstLetter(problemData.language)}</a></td>` +
+      "<td>" +
+      tagCell +
+      "</td>" +
+      "</tr>"
+    );
+  }
+
+  function filterToTag(tag, data) {
+    const newData = [];
+    Object.keys(data).forEach((key) => {
+      if (data[key].tags.includes(tag)) {
+        newData.push(data[key]);
+      }
+    });
+    return newData;
+  }
+
+  function filterToDifficulty(difficulty, data) {
+    const newData = [];
+    Object.keys(data).forEach((key) => {
+      if (data[key].difficulty == difficulty) {
+        newData.push(data[key]);
+      }
+    });
+    return newData;
+  }
+
+  function filterToLanguage(language, data) {
+    const newData = [];
+    Object.keys(data).forEach((key) => {
+      if (data[key].language == language) {
+        newData.push(data[key]);
+      }
+    });
+    return newData;
+  }
+
+  function markAsFilteredToTag(tag) {
+    var filterText = document.getElementById("tag-filter");
+    filterText.style.display = "initial";
+    filterText.innerText += " " + tag;
+  }
+
+  function markAsFilteredToDifficulty(difficulty) {
+    var filterText = document.getElementById("difficulty-filter");
+    filterText.style.display = "initial";
+    filterText.innerHTML +=
+      " " +
+      `<span class="difficulty ${difficulty}">${capitalizeFirstLetter(
+        difficulty
+      )}</span>`;
+  }
+
+  function markAsFilteredToLanguage(language) {
+    var filterText = document.getElementById("language-filter");
+    filterText.style.display = "initial";
+    filterText.innerText += " " + capitalizeFirstLetter(language);
+  }
+
+  function markAsFiltered() {
+    var filterText = document.getElementById("see-all");
+    filterText.style.display = "initial";
+  }
+
+  retrieveData().then((data) => {
+    const url = new URL(window.location.href);
+    const tag = url.searchParams.get("tag");
+    var filtered = false;
+    var dataToUse = data;
+    if (tag != null) {
+      dataToUse = filterToTag(tag, dataToUse);
+      markAsFilteredToTag(tag);
+      filtered = true;
+    }
+
+    const difficulty = url.searchParams.get("difficulty");
+    if (difficulty != null) {
+      dataToUse = filterToDifficulty(difficulty, dataToUse);
+      markAsFilteredToDifficulty(difficulty);
+      filtered = true;
+    }
+
+    const language = url.searchParams.get("language");
+    if (language != null) {
+      dataToUse = filterToLanguage(language, dataToUse);
+      markAsFilteredToLanguage(language);
+      filtered = true;
+    }
+
+    if (filtered) {
+      markAsFiltered();
+    }
+
+    populateProblemTable(dataToUse);
+  });
 </script>
+
+<script src="theme.js"></script>
