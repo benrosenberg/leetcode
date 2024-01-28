@@ -89,7 +89,7 @@
   }
 
   function goToProblem(problemID) {
-    const url = new URL(window.location.href + "/problem.html");
+    const url = new URL(window.location.origin + "/problem.html");
     url.searchParams.set("problem", problemID);
     window.location = url;
   }
