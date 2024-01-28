@@ -70,13 +70,25 @@
 </p>
 
 <script>
+  AbortSignal.timeout ??= function timeout(ms) {
+    const ctrl = new AbortController()
+    setTimeout(() => ctrl.abort(), ms)
+    return ctrl.signal
+  }
+
   async function retrieveData() {
-    const response = await fetch(
+    return await fetch(
       "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json"
-    );
-    const data = await response.json();
-    // console.log(data);
-    return data;
+    , {signal : AbortSignal.timeout(1000)}).then((response) => {
+        if (!response.ok) {
+          return response.text().then(text => {throw new Error(text)})
+        } else {
+          return response.json();
+        }
+    }).catch((error) => {
+      console.log(error);
+      alert('Sorry, looks like the host for the data is down right now (took too long to fetch data)');
+    });
   }
 
   function capitalizeFirstLetter(string) {
