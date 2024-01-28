@@ -47,6 +47,8 @@
         </form>
     </div>
 
+    <p id="response-success" style="display: none"></p>
+
     <p>
         <a href="/" class="link">Return to problem set overview</a>
     </p>
@@ -68,6 +70,15 @@
                 body: JSON.stringify(text),
                 });
                 console.log("Completed!", response);
+                var responseSuccess = document.getElementById('response-success');console.log('' + response.status);
+                if (('' + response.status)[0] == '4') {
+                    responseSuccess.innerText = `Failed with code ${response.status}. Your message is ${field.innerText.length} characters, which is above the max.`;
+                    responseSuccess.style.color = 'red';
+                } else {
+                    responseSuccess.innerText = `Succeeded with code ${response.status}. Message has been sent to channel.`;
+                    responseSuccess.style.color = 'green';
+                }
+                responseSuccess.style.display = 'initial';
             } catch (err) {
                 console.error(`Error: ${err}`);
             }

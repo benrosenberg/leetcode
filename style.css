@@ -9,6 +9,29 @@
     --color-buttonborderthickness: 2px;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+    box: inset 0 0 5px var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-hoverbg);
+  }
+
 #header {
     width: 100%;
 }

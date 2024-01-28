@@ -11,12 +11,14 @@
 <div class="page">
   <div class="content">
     <div id="header">
-        <h1 id="title" class="title">
-            <a href="/" class="overview-title"
-              >LeetCode Solutions</a
-            >
-          </h1>
-          <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
+      <h1 id="title" class="title">
+        <a href="/" class="overview-title">LeetCode Solutions</a>
+      </h1>
+      <span class="theme-toggle"
+        ><button class="theme-toggle-button" onclick="toggleColorMode();">
+          toggle theme
+        </button></span
+      >
     </div>
 
     <h4 style="font-weight: 400">
@@ -26,18 +28,27 @@
       <a class="link" href="submit.html">Submit a solution</a>
     </h4>
 
-    <h4 id="last-updated" class="date"></h4>
+    <h4 id="last-solved" class="date">Latest solved on</h4>
+
+    <p id="total-solved">Total:</p>
 
     <p style="display: none" id="tag-filter">
       Filtering to problems tagged as:
     </p>
+    
     <p style="display: none" id="difficulty-filter">
       Filtering to problems of difficulty:
     </p>
+
     <p style="display: none" id="language-filter">
       Filtering to problems solved in:
     </p>
-    <p style="display: none; font-size: medium" id="see-all">
+
+    <p style="display: none" id="date-filter">
+        Filtering to problems solved on:
+    </p>
+
+    <p style="display: none" id="see-all">
       <a href="/" class="link"> See all</a>
     </p>
 
@@ -78,25 +89,33 @@
   }
 
   function goToProblem(problemID) {
-    const url = new URL(window.location.origin + "/problem.html");
+    const url = new URL(window.location.href + "/problem.html");
     url.searchParams.set("problem", problemID);
     window.location = url;
   }
 
   function goToTag(tag) {
-    const url = new URL(window.location.origin);
+    const url = new URL(window.location.href);
     url.searchParams.set("tag", tag);
     window.location = url;
   }
 
   function goToDifficulty(difficulty) {
     const url = new URL(window.location.href);
-    window.location = url.origin + `/?difficulty=${difficulty}`;
+    url.searchParams.set("difficulty", difficulty);
+    window.location = url;
   }
 
   function goToLanguage(language) {
     const url = new URL(window.location.href);
-    window.location = url.origin + `/?language=${language}`;
+    url.searchParams.set("language", language);
+    window.location = url;
+  }
+
+  function goToDate(date) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("date", date);
+    window.location = url;
   }
 
   function getProblemTitleLink(problemData) {
@@ -123,7 +142,7 @@
         tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>`;
       }
     });
-    if (problemData.tags.length > 2) {
+    if (problemData.tags.length > numTagsToShow) {
       tagCell += "...";
     }
 
@@ -137,9 +156,7 @@
       }')"><span class="difficulty ${
         problemData.difficulty
       }">${capitalizeFirstLetter(problemData.difficulty)}</span></a></td>` +
-      "<td>" +
-      problemData.date +
-      "</td>" +
+      `<td><a onclick="goToDate('${problemData.date}')">${problemData.date}</a></td>` +
       `<td><a class="table-link" onclick="goToLanguage('${
         problemData.language
       }')">${capitalizeFirstLetter(problemData.language)}</a></td>` +
@@ -180,15 +197,25 @@
     return newData;
   }
 
+  function filterToDate(date, data) {
+    const newData = [];
+    Object.keys(data).forEach((key) => {
+      if (data[key].date == date) {
+        newData.push(data[key]);
+      }
+    });
+    return newData;
+  }
+
   function markAsFilteredToTag(tag) {
     var filterText = document.getElementById("tag-filter");
-    filterText.style.display = "initial";
+    filterText.style.display = "block";
     filterText.innerText += " " + tag;
   }
 
   function markAsFilteredToDifficulty(difficulty) {
     var filterText = document.getElementById("difficulty-filter");
-    filterText.style.display = "initial";
+    filterText.style.display = "block";
     filterText.innerHTML +=
       " " +
       `<span class="difficulty ${difficulty}">${capitalizeFirstLetter(
@@ -198,13 +225,35 @@
 
   function markAsFilteredToLanguage(language) {
     var filterText = document.getElementById("language-filter");
-    filterText.style.display = "initial";
+    filterText.style.display = "block";
     filterText.innerText += " " + capitalizeFirstLetter(language);
+  }
+
+  function markAsFilteredToDate(date) {
+    var filterText = document.getElementById("date-filter");
+    filterText.style.display = "block";
+    filterText.innerText += " " + date;
   }
 
   function markAsFiltered() {
     var filterText = document.getElementById("see-all");
     filterText.style.display = "initial";
+  }
+
+  function setTotalSolved(data) {
+    var totalElement = document.getElementById("total-solved");
+    totalElement.innerText += " " + Object.keys(data).length;
+  }
+
+  function setLastSolved(data) {
+    var lastSolvedElement = document.getElementById("last-solved");
+    var maxDate = "2000-1-1";
+    Object.keys(data).forEach((key) => {
+      if (data[key]["date"] > maxDate) {
+        maxDate = data[key]["date"];
+      }
+    });
+    lastSolvedElement.innerText += " " + maxDate;
   }
 
   retrieveData().then((data) => {
@@ -232,9 +281,20 @@
       filtered = true;
     }
 
+    const date = url.searchParams.get("date");
+    if (date != null) {
+      dataToUse = filterToDate(date, dataToUse);
+      markAsFilteredToDate(date);
+      filtered = true;
+    }
+
     if (filtered) {
       markAsFiltered();
     }
+
+    setTotalSolved(dataToUse);
+
+    setLastSolved(dataToUse);
 
     populateProblemTable(dataToUse);
   });
