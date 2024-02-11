@@ -144,6 +144,7 @@
     } else {
       const url = new URL(window.location.href);
       url.searchParams.set("sortKey", key);
+      url.searchParams.delete("sortOrder");
       window.location = url;
     }
   }
