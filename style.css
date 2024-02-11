@@ -291,3 +291,8 @@ td:last-child {
     font-size: small;
     color: var(--color-text);
 }
+
+.sort-icon {
+    font-size: small;
+    vertical-align: 2px;
+}

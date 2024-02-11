@@ -35,7 +35,7 @@
     <p style="display: none" id="tag-filter">
       Filtering to problems tagged as:
     </p>
-    
+
     <p style="display: none" id="difficulty-filter">
       Filtering to problems of difficulty:
     </p>
@@ -45,22 +45,14 @@
     </p>
 
     <p style="display: none" id="date-filter">
-        Filtering to problems solved on:
+      Filtering to problems solved on:
     </p>
 
     <p style="display: none" id="see-all">
       <a href="/" class="link"> See all</a>
     </p>
 
-    <table id="problemTable" class="problem-table" cellpadding="10">
-      <tr>
-        <th>Problem</th>
-        <th>Difficulty</th>
-        <th>Date solved</th>
-        <th>Language</th>
-        <th>Tags</th>
-      </tr>
-    </table>
+    <table id="problemTable" class="problem-table" cellpadding="10"></table>
   </div>
 </div>
 
@@ -71,24 +63,31 @@
 
 <script>
   AbortSignal.timeout ??= function timeout(ms) {
-    const ctrl = new AbortController()
-    setTimeout(() => ctrl.abort(), ms)
-    return ctrl.signal
-  }
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), ms);
+    return ctrl.signal;
+  };
 
   async function retrieveData() {
     return await fetch(
-      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json"
-    , {signal : AbortSignal.timeout(1000)}).then((response) => {
+      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+      { signal: AbortSignal.timeout(1000) }
+    )
+      .then((response) => {
         if (!response.ok) {
-          return response.text().then(text => {throw new Error(text)})
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
         } else {
           return response.json();
         }
-    }).catch((error) => {
-      console.log(error);
-      alert('Sorry, looks like the host for the data is down right now (took too long to fetch data)');
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+        );
+      });
   }
 
   function capitalizeFirstLetter(string) {
@@ -130,14 +129,96 @@
     window.location = url;
   }
 
+  function sortBy(key) {
+    if (isSortedBy() == key) {
+      // toggle reversed
+      if (isSortReversed()) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("sortOrder");
+        window.location = url;
+      } else {
+        const url = new URL(window.location.href);
+        url.searchParams.set("sortOrder", 'reversed');
+        window.location = url;
+      }
+    } else {
+      const url = new URL(window.location.href);
+      url.searchParams.set("sortKey", key);
+      window.location = url;
+    }
+  }
+
+  function isSortedBy() {
+    const url = new URL(window.location.href);
+    const potentialSortKey = url.searchParams.get("sortKey");
+    var sortKey = "key";
+    if (potentialSortKey != null) {
+      var validSortingMethods = ["key", "difficulty", "date", "language"];
+      if (validSortingMethods.includes(potentialSortKey)) {
+        sortKey = potentialSortKey;
+      }
+    }
+    return sortKey;
+  }
+
+  function isSortReversed() {
+    const url = new URL(window.location.href);
+    const potentialSortOrder = url.searchParams.get("sortOrder");
+    var sortReversed = false;
+    if (potentialSortOrder == "reversed") {
+      sortReversed = true;
+    }
+    return sortReversed;
+  }
+
   function getProblemTitleLink(problemData) {
     return `<a class="table-link" onclick="goToProblem(${problemData.number})">${problemData.number}. ${problemData.title}</a>`;
   }
 
-  function populateProblemTable(data) {
+  function populateProblemTable(data, sortBy, sortReversed) {
     var table = document.getElementById("problemTable");
     var keys = Object.keys(data);
-    keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    if (sortBy == "key") {
+      keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    } else if (sortBy == "difficulty") {
+      keys.sort((a, b) => {
+        var order = ["easy", "medium", "hard"];
+        var aIndex = order.indexOf(data[a]["difficulty"]);
+        var bIndex = order.indexOf(data[b]["difficulty"]);
+        if (aIndex == bIndex) {
+          return 0;
+        }
+        if (aIndex < bIndex) {
+          return -1;
+        }
+        if (aIndex > bIndex) {
+          return 1;
+        }
+      });
+    } else {
+      keys.sort((a, b) => data[a][sortBy].localeCompare(data[b][sortBy]));
+    }
+    if (sortReversed) {
+      keys.reverse();
+    }
+    var header = {
+      'key' : 'Problem', 'difficulty' : 'Difficulty', 'date' : 'Date Solved', 'language' : 'Language'
+    };
+    if (sortReversed) {
+      header[sortKey] += ' <span class="sort-icon">▼</span>';
+    } else {
+      header[sortKey] +=  ' <span class="sort-icon">▲</span>';
+    }
+    function wrappedHeader(key) {
+      return `<a onclick="sortBy('${key}')">${header[key]}</a>`;
+    }
+    table.innerHTML = `<tr>       \
+        <th>${wrappedHeader('key')}</th>       \
+        <th>${wrappedHeader('difficulty')}</th>    \
+        <th>${wrappedHeader('date')}</th>          \
+        <th>${wrappedHeader('language')}</th>      \
+        <th>Tags</th>             \
+      </tr>`;
     keys.forEach((key) => {
       table.innerHTML += createTableRow(data[key]);
     });
@@ -304,11 +385,14 @@
       markAsFiltered();
     }
 
+    sortKey = isSortedBy();
+    sortReversed = isSortReversed();
+
     setTotalSolved(dataToUse);
 
     setLastSolved(dataToUse);
 
-    populateProblemTable(dataToUse);
+    populateProblemTable(dataToUse, sortKey, sortReversed);
   });
 </script>
 
