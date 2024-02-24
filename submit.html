@@ -37,12 +37,16 @@
     </div>
 
     <div>
-        <form onsubmit="sendViaWebhook(); return false;">
+        <form onsubmit="submitSolution(); return false;">
         <table cellpadding="4">
-            <tr><td style="font-size: large;">Webhook URL</td><td><input type="password" id="webhook-url"></td></tr>
+            <tr><td style="font-size: large;">Token</td><td><input type="password" id="token"></td></tr>
         </table>
+        <p style="display: none" id="overwriteCheckbox">
+            <input type="checkbox" id="overwrite" name="overwrite" value="Overwrite" onclick="checkOverwrite()">
+            <label for="overwrite">Overwrite existing submission?</label>
+        </p>
         <p>
-            <button class="navbutton" type="submit" onclick="">Update site data</button>
+            <button class="navbutton" type="submit" onclick="" id="submitButton">Update site data</button>
         </p>
         </form>
     </div>
@@ -57,25 +61,27 @@
 <p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></p>
 
 <script>
-    function sendViaWebhook() {
-        webhookURL = document.getElementById('webhook-url').value;
+    function submitSolution() {
+        submitURL = "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/submit-lc";
         (async () => {
             try {
                 var field = document.getElementById('output');
+                var token = document.getElementById('token').value;
                 var content = field.innerText;
-                var text = { content: content };
-                const response = await fetch(webhookURL, {
+                const response = await fetch(submitURL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(text),
+                headers: { "Content-Type": "application/json", "Authentication" : token },
+                body: content,
                 });
                 console.log("Completed!", response);
-                var responseSuccess = document.getElementById('response-success');console.log('' + response.status);
+                var responseSuccess = document.getElementById('response-success');
+                console.log('' + response.status);
+                var responseText = await response.text();
                 if (('' + response.status)[0] == '4') {
-                    responseSuccess.innerText = `Failed with code ${response.status}. Your message is ${field.innerText.length} characters, which is above the max.`;
+                    responseSuccess.innerText = `Failed with code ${response.status}. Response body: ${responseText}`;
                     responseSuccess.style.color = 'red';
                 } else {
-                    responseSuccess.innerText = `Succeeded with code ${response.status}. Message has been sent to channel.`;
+                    responseSuccess.innerText = `Succeeded with code ${response.status}. Response body: ${responseText}`;
                     responseSuccess.style.color = 'green';
                 }
                 responseSuccess.style.display = 'initial';
@@ -85,31 +91,81 @@
         })();
     }
 
-    function generateSubmissionData() {
-        number = document.getElementById('problem-number').value;
-        title = document.getElementById('problem-title').value;
-        var tags = [];
-        tagField = document.getElementById('problem-tags').value.split(',').map((tag) => tag.trim()).forEach(element => {
-           if (element.length > 0) {
-            tags.push(element);
-           }
+    async function retrieveData() {
+        return await fetch(
+        "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+        { signal: AbortSignal.timeout(1000) }
+        )
+        .then((response) => {
+            if (!response.ok) {
+            return response.text().then((text) => {
+                throw new Error(text);
+            });
+            } else {
+            return response.json();
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert(
+            "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+            );
         });
-        difficulty = document.getElementById('problem-difficulty').value;
-        date = document.getElementById('problem-date').value;
-        language = document.getElementById('problem-language').value;
-        solution = document.getElementById('problem-solution').value;
-        var data = {};
-        data[number] = {
-            "number" : number,
-            "title" : title,
-            "tags" : tags,
-            "difficulty" : difficulty,
-            "date" : date,
-            "solution" : solution,
-            "language" : language
-        };
-        output = document.getElementById('output');
-        output.innerText = JSON.stringify(data, null, '    ');
+    }
+
+    function alreadySubmitted() {
+        var submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+        var overwriteCheckbox = document.getElementById('overwriteCheckbox');
+        overwriteCheckbox.style.display = 'initial';
+    }
+
+    function notAlreadySubmitted() {
+        var overwriteCheckbox = document.getElementById('overwriteCheckbox');
+        overwriteCheckbox.style.display = 'none';
+        var submitButton = document.getElementById('submitButton');
+        submitButton.disabled = false;
+    }
+
+    function checkOverwrite() {
+        var submitButton = document.getElementById('submitButton');
+        submitButton.disabled = false;
+    }
+
+    function generateSubmissionData() {
+        retrieveData().then((current_data) => {
+            number = document.getElementById('problem-number').value;
+            // if number already in data, grey out submission until 
+            // "overwrite" flag is checked
+            if (Object.keys(current_data).includes(number)) {
+                alreadySubmitted();
+            } else {
+                notAlreadySubmitted();
+            }
+            title = document.getElementById('problem-title').value;
+            var tags = [];
+            tagField = document.getElementById('problem-tags').value.split(',').map((tag) => tag.trim()).forEach(element => {
+            if (element.length > 0) {
+                tags.push(element);
+            }
+            });
+            difficulty = document.getElementById('problem-difficulty').value;
+            date = document.getElementById('problem-date').value;
+            language = document.getElementById('problem-language').value;
+            solution = document.getElementById('problem-solution').value;
+            var data = {};
+            data[number] = {
+                "number" : number,
+                "title" : title,
+                "tags" : tags,
+                "difficulty" : difficulty,
+                "date" : date,
+                "solution" : solution,
+                "language" : language
+            };
+            output = document.getElementById('output');
+            output.innerText = JSON.stringify(data, null, '    ');
+        });
     }
 </script>
 

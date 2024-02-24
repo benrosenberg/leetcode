@@ -219,6 +219,10 @@ body {
   outline-offset: 2px;
 }
 
+.navbutton:disabled, .navbutton[disabled] {
+  background-color: var(--color-tagbg);
+}
+
 .navbutton:focus-visible {
   box-shadow: none;
 }
