@@ -14,19 +14,15 @@
     <h3 style="font-weight: 400;">by <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></h3>
 
     <p>
-        This site is a frontend to display the contents of a JSON file like <a href="/data.json" class="link">this one</a>, which contains submissions I've made to <a href="https://leetcode.com"  class="link">LeetCode</a>.
+        This site is a frontend to display the contents of a JSON file like <a href="/data.json" class="link">this one</a>, which contains submissions I've made to <a href="https://leetcode.com" class="link">LeetCode</a>.
     </p>
 
     <p>
-        The only file that changes on this site at all is the abovementioned JSON file. All other content is either static or generated dynamically using client-side JavaScript after pulling in that JSON file.
+        The only file that changes on this site at all is the abovementioned JSON file. All other content is either static or generated dynamically using client-side JavaScript after pulling in that JSON file, which is explicitly served by nginx and allows Cross-Origin Resource Sharing (CORS) so that it can be referenced on this static site.
     </p>
 
     <p>
-        Additionally, there is a process to submit new solutions via a Discord webhook. I have a DigitalOcean droplet running a website that I use for this (among other things). The droplet has a Discord bot running on it that detects webhook (and manual) messages, and adds them to the authoritative JSON file. This JSON file on the website is explicitly served by nginx and allows Cross-Origin Resource Sharing (CORS) so that it can be referenced on this static site.
-    </p>
-
-    <p>
-        To submit new solutions, there is a static page which requires the user to enter a Discord webhook URL to send the generated submission JSON fragment to a specific Discord channel, so that it can be picked up by the bot.
+        New submissions are added via an authenticated POST request to a CORS-whitelisted endpoint which updates the relevant JSON file.
     </p>
 
     <p>
