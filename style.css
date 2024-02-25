@@ -21,7 +21,6 @@
   
   ::-webkit-scrollbar-track {
     background: var(--color-bg);
-    box: inset 0 0 5px var(--color-text);
   }
   
   ::-webkit-scrollbar-thumb {
@@ -40,6 +39,9 @@
     display:inline;
 }
 
+.title::selection { background: transparent; }
+.title::-moz-selection { background: transparent; }
+
 #header .theme-toggle {
     display:inline;
     float: right;
@@ -57,6 +59,10 @@
     padding-right: 7px;
     border: var(--color-buttonborderthickness) solid var(--color-text);
     box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .theme-toggle-button:hover {
@@ -243,10 +249,6 @@ body {
     .navbutton {
         font-size:medium;
     }
-
-    .theme-toggle-svg {
-        width:150%;
-    }
 }
 
 .table-link {
@@ -295,6 +297,21 @@ td:last-child {
     font-size: small;
     color: var(--color-text);
 }
+
+.bottom-text::selection { background: transparent; }
+.bottom-text::-moz-selection { background: transparent; }
+
+.metadata {
+    opacity: 0.0;
+    font-size: 0;
+}
+
+.link-problem {
+    color: var(--color-text);
+}
+
+.link-problem::selection { background: transparent; }
+.link-problem::-moz-selection { background: transparent; }
 
 .sort-icon {
     font-size: small;
