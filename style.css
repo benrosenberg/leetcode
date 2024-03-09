@@ -84,6 +84,12 @@ input {
     color: var(--color-text);
 }
 
+select {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+}
+
 textarea {
     background-color: var(--color-bg);
     border: 1px solid var(--color-text);

@@ -22,7 +22,7 @@
             <tr><td style="font-size: large;">Number</td><td><input type="text" id="problem-number"></td></tr>
             <tr><td style="font-size: large;">Title</td><td><input type="text" id="problem-title"></td></tr>
             <tr><td style="font-size: large;">Tags</td><td><input type="text" id="problem-tags"></td></tr>
-            <tr><td style="font-size: large;">Difficulty</td><td><input type="text" id="problem-difficulty"></td></tr>
+            <tr><td style="font-size: large;">Difficulty</td><td><select id="problem-difficulty"><option value="easy" class="easy">Easy</option><option value="medium" class="medium">Medium</option><option value="hard" class="hard">Hard</option></select></td></tr>
             <tr><td style="font-size: large;">Date</td><td><input type="date" id="problem-date"></td></tr>
             <tr><td style="font-size: large;">Language</td><td><input type="text" id="problem-language"></td></tr>
             <tr><td style="font-size: large;">Solution</td><td><textarea id="problem-solution" rows="20" cols="60"></textarea></td></tr>
@@ -43,7 +43,7 @@
         </table>
         <p style="display: none" id="overwriteCheckbox">
             <input type="checkbox" id="overwrite" name="overwrite" value="Overwrite" onclick="checkOverwrite()">
-            <label for="overwrite">Overwrite existing submission?</label>
+            <label for="overwrite">Overwrite <a href="" class="link" id="existing-submission-link">existing submission</a>?</label>
         </p>
         <p>
             <button class="navbutton" type="submit" onclick="" id="submitButton">Update site data</button>
@@ -113,11 +113,15 @@
         });
     }
 
-    function alreadySubmitted() {
+    function alreadySubmitted(problemID) {
         var submitButton = document.getElementById('submitButton');
         submitButton.disabled = true;
         var overwriteCheckbox = document.getElementById('overwriteCheckbox');
         overwriteCheckbox.style.display = 'initial';
+        existingSubmissionLink = document.getElementById('existing-submission-link');
+        const url = new URL(window.location.origin + "/problem.html");
+        url.searchParams.set("problem", problemID);
+        existingSubmissionLink.setAttribute('href', url.href);
     }
 
     function notAlreadySubmitted() {
@@ -138,7 +142,7 @@
             // if number already in data, grey out submission until 
             // "overwrite" flag is checked
             if (Object.keys(current_data).includes(number)) {
-                alreadySubmitted();
+                alreadySubmitted(number);
             } else {
                 notAlreadySubmitted();
             }
