@@ -46,7 +46,7 @@
   async function retrieveData() {
     return await fetch(
       "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json"
-    , {signal : AbortSignal.timeout(1000)}).then((response) => {
+    , {signal : AbortSignal.timeout(2000)}).then((response) => {
         if (!response.ok) {
           return response.text().then(text => {throw new Error(text)})
         } else {
