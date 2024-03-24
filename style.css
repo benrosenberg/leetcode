@@ -307,6 +307,89 @@ td:last-child {
 .bottom-text::selection { background: transparent; }
 .bottom-text::-moz-selection { background: transparent; }
 
+.page-bar {
+    text-align: center;
+    padding: 10px;
+    font-size: medium;
+    color: var(--color-text);
+}
+
+.page-bar-indicator {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    /* border-radius: 1rem; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: 0 solid var(--color-text);
+    box-sizing: border-box;
+    font-weight: bold;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.page-bar-button {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    /* border-radius: 1rem; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border: calc(var(--color-buttonborderthickness)/2) solid var(--color-text);
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.page-bar-button:hover {
+    background-color: var(--color-tagbg);
+  }
+
+.page-bar-button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.page-bar-button:focus-visible {
+    box-shadow: none;
+}
+
+.page-bar-move-button {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    /* border-radius: 1rem; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: 0 solid var(--color-text);
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.page-bar-move-button:hover {
+    background-color: var(--color-tagbg);
+  }
+
+.page-bar-move-button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.page-bar-move-button:focus-visible {
+    box-shadow: none;
+}
+
 .metadata {
     opacity: 0.0;
     font-size: 0;
