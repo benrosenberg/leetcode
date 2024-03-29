@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=yes"
+  />
+  <title>LeetCode Solutions</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+</head>
+
+<div class="page">
+  <div class="content">
+    <div id="header">
+      <h1 id="title" class="title">
+        <a href="/" class="overview-title">LeetCode Solutions</a>
+      </h1>
+      <span class="theme-toggle"
+        ><button class="theme-toggle-button" onclick="toggleColorMode();">
+          toggle theme
+        </button></span
+      >
+    </div>
+
+    <h4 style="font-weight: 400">
+      by
+      <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
+      | <a class="link" href="about.html">About this site</a> |
+      <a class="link" href="submit.html">Submit a solution</a>
+    </h4>
+
+    <h3>All problem tags</h3>
+
+    <div id="tags">
+
+    </div>
+    <p>
+        <a href="/" class="link">Return to problem set overview</a>
+    </p>
+  </div>
+</div>
+
+<p class="bottom-text">
+  © 2024-20XX
+  <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a>
+</p>
+
+<script>
+  AbortSignal.timeout ??= function timeout(ms) {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), ms);
+    return ctrl.signal;
+  };
+
+  async function retrieveData() {
+    return await fetch(
+      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+      // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
+      { signal: AbortSignal.timeout(2000) }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+        );
+      });
+  }
+
+  function goToTag(tag) {
+    const url = new URL(window.location.origin);
+    url.searchParams.set("tag", tag);
+    window.location = url;
+  }
+
+  function getTags(data) {
+    var tagCounts = {};
+    Object.keys(data).forEach(key => {
+        data[key]['tags'].forEach((tag) => {
+            if (tag in tagCounts) {
+                tagCounts[tag] += 1;
+            } else {
+                tagCounts[tag] = 1;
+            }
+        });
+    });
+    var sorted = Array.from(Object.keys(tagCounts));
+    sorted.sort((a, b) => {
+        var result;
+        if (tagCounts[a] < tagCounts[b]) {
+            result = -1;
+        } else if (tagCounts[a] == tagCounts[b]) {
+            result = 0;
+        } else {
+            result = 1;
+        }
+        // sort from highest to lowest count
+        return -result;
+    });
+    return [sorted, tagCounts];
+  }
+
+  function displayTags(sortedTags, tagCounts) {
+    var tags = document.getElementById('tags');
+    sortedTags.forEach((tag) => {
+        tags.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag} (${tagCounts[tag]})</span></a> `;
+    });
+  }
+
+  retrieveData().then((data) => {
+    let [sortedTags, tagCounts] = getTags(data);
+    console.log(sortedTags);
+    console.log(tagCounts);
+
+    displayTags(sortedTags, tagCounts);
+  });
+</script>
+
+<script src="theme.js"></script>
