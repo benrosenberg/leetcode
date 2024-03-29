@@ -12,7 +12,12 @@
         <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
     </div>
 
-    <h3 style="font-weight: 400;">by <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></h3>
+    <h4 style="font-weight: 400">
+        by
+        <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
+        | <a class="link" href="about.html">About this site</a> |
+        <a class="link" href="submit.html">Submit a solution</a>
+    </h4>
 
     <p>
         Generate a submission data item to insert into the site's JSON file of submission data.
@@ -62,6 +67,18 @@
 <p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></p>
 
 <script>
+    function populateDefaults() {
+        // default to date=today and language=python
+        var date = document.getElementById('problem-date');
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        date.value = today;
+        var language = document.getElementById('problem-language');
+        language.value = 'python';
+    }
+
     function submitSolution() {
         submitURL = "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/submit-lc";
         (async () => {
@@ -171,6 +188,10 @@
             output = document.getElementById('output');
             output.innerText = JSON.stringify(data, null, '    ');
         });
+    }
+
+    window.onload = function() {
+        populateDefaults();
     }
 </script>
 
