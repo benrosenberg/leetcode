@@ -389,16 +389,23 @@
     var rightmostPage = totalPages;
     var displayLeft = true;
     var displayRight = true;
-    if (page - pagesEitherSide <= 1) {
+    if ((page - pagesEitherSide <= 1) && (page + pagesEitherSide >= totalPages)) {
+      // page is within range of both start and end
+      // display page range but no arrows
+      leftmostPage = 1;
+      rightmostPage = totalPages;
+      displayLeft = false;
+      displayRight = false;
+    } else if (page - pagesEitherSide <= 1) {
       // page is within range of start
       // display page range and right arrows
       leftmostPage = 1;
-      rightmostPage = PAGES_PER_BAR + 1;
+      rightmostPage = Math.min(totalPages, PAGES_PER_BAR + 1);
       displayLeft = false;
     } else if (page + pagesEitherSide >= totalPages) {
       // page is within range of end
       // display left arrows and page range
-      leftmostPage = totalPages - PAGES_PER_BAR;
+      leftmostPage = Math.max(1, totalPages - PAGES_PER_BAR);
       rightmostPage = totalPages;
       displayRight = false;
     } else {
@@ -407,6 +414,15 @@
       leftmostPage = page - pagesEitherSide;
       rightmostPage = page + pagesEitherSide;
     }
+    // make sure to remove stray arrows
+    if (leftmostPage == 1) {
+      displayLeft = false;
+    }
+    if (rightmostPage == totalPages) {
+      displayRight = false;
+    }
+    // console.log(leftmostPage);
+    // console.log(rightmostPage);
     if (displayLeft) {
       pageBar.innerHTML += (
         `<button class="page-bar-move-button" id="left-arrow-max" onclick="goToPage(1)">&lt;&lt;</button>`
@@ -489,7 +505,7 @@
     // set page to max page
     const totalPages = pagesOfData(dataToUse);
     if (page > totalPages) {
-      page = totalPages;
+      goToPage(totalPages);
     }
 
     populateProblemTable(dataToUse, sortKey, sortReversed, page);
