@@ -181,6 +181,7 @@ body {
     -webkit-user-select: none;
     touch-action: manipulation;
     display: inline-block;
+    margin-top: 10px;
 }
 
 .tags {
