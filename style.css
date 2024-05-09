@@ -6,6 +6,7 @@
     --color-easy: #00ba38;
     --color-medium: #d38900;
     --color-hard: #d71600;
+    --color-darktext: #a3987c;
     --color-buttonborderthickness: 2px;
 }
 
@@ -143,9 +144,21 @@ body {
 
 .code {
     width: 100%;
+    border-radius: 15px;
+    border: var(--color-buttonborderthickness) dashed var(--color-text);
+    padding: 15px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+}
+
+.language-solutions-combined {
+    width: 100%;
     overflow: scroll;
     overflow-y: hidden;
     overflow-x: auto;
+    /* border-radius: 15px; */
+    /* padding: 15px; */
 }
 
 .language {
@@ -162,6 +175,15 @@ body {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+.solution-date {
+    font-size: large;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    float: right;
+    color: var(--color-darktext);
 }
 
 .tag {
@@ -188,6 +210,68 @@ body {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+}
+
+.language-tag {
+    background-color: var(--color-tagbg);
+    border: 10;
+    border-radius: 30px;
+    font-size: large;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    position: relative;
+    top: -5px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.languages {
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.tab-button {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: var(--color-buttonborderthickness) solid var(--color-text);
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.tab-button-active {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: calc(2*var(--color-buttonborderthickness)) solid var(--color-text);
+    border-radius: 10px;
+    padding: calc(10px - var(--color-buttonborderthickness));
+    /* padding: 10px; */
+    margin-right: 10px;
+}
+
+.tab-button:hover {
+    background-color: var(--color-tagbg); /*rgb(239, 239, 239);*/
+}
+
+.tab-button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.tab-button:disabled, .tab-button[disabled] {
+    background-color: var(--color-tagbg);
+}
+
+.tab-button:focus-visible {
+    box-shadow: none;
 }
 
 .disabled {
