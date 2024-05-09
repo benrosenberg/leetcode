@@ -60,10 +60,9 @@
 <div class="page-bar" id="page-bar">
 </div>
 
-<p class="bottom-text">
-  © 2024-20XX
-  <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a>
-</p>
+<div class="bottom-text">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img style="height:20px!important;margin-left:3px;vertical-align:middle;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:middle;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""></a></p> 
+</div>
 
 <script>
   const ITEMS_PER_PAGE = 20;
@@ -81,7 +80,8 @@
 
   async function retrieveData() {
     return await fetch(
-      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+      "./data.json",
+      // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
       // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
       { signal: AbortSignal.timeout(2000) }
     )
@@ -172,7 +172,7 @@
     const potentialSortKey = url.searchParams.get("sortKey");
     var sortKey = "key";
     if (potentialSortKey != null) {
-      var validSortingMethods = ["key", "difficulty", "date", "language"];
+      var validSortingMethods = ["key", "difficulty", "date"];
       if (validSortingMethods.includes(potentialSortKey)) {
         sortKey = potentialSortKey;
       }
@@ -235,7 +235,7 @@
         <th>${wrappedHeader('key')}</th>       \
         <th>${wrappedHeader('difficulty')}</th>    \
         <th>${wrappedHeader('date')}</th>          \
-        <th>${wrappedHeader('language')}</th>      \
+        <th>Languages (<a class="link" href="languages.html">view all</a>)</th>      \
         <th>Tags (<a class="link" href="tags.html">view all</a>)</th>             \
       </tr>`;
     // implement paging
@@ -263,6 +263,16 @@
       tagCell += "...";
     }
 
+    var languageCell = "";
+    let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
+    uniqueLanguages.forEach((language) => {
+      if (languageCell.length == 0) {
+        languageCell += `<a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
+      } else {
+        languageCell += `, <a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
+      }
+    });
+
     return (
       "<tr>" +
       "<td>" +
@@ -274,12 +284,8 @@
         problemData.difficulty
       }">${capitalizeFirstLetter(problemData.difficulty)}</span></a></td>` +
       `<td><a onclick="goToDate('${problemData.date}')">${problemData.date}</a></td>` +
-      `<td><a class="table-link" onclick="goToLanguage('${
-        problemData.language
-      }')">${capitalizeFirstLetter(problemData.language)}</a></td>` +
-      "<td>" +
-      tagCell +
-      "</td>" +
+      `<td>${languageCell}</td>` +
+      `<td>${tagCell}</td>` +
       "</tr>"
     );
   }
@@ -307,7 +313,8 @@
   function filterToLanguage(language, data) {
     const newData = [];
     Object.keys(data).forEach((key) => {
-      if (data[key].language == language) {
+      let uniqueLanguages = new Set(data[key].solutions.map((solution) => solution.language));
+      if (uniqueLanguages.has(language)) {
         newData.push(data[key]);
       }
     });
@@ -364,7 +371,7 @@
 
   function setLastSolved(data) {
     var lastSolvedElement = document.getElementById("last-solved");
-    var maxDate = "2000-1-1";
+    var maxDate = "2000-01-01";
     Object.keys(data).forEach((key) => {
       if (data[key]["date"] > maxDate) {
         maxDate = data[key]["date"];
