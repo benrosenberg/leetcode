@@ -49,7 +49,7 @@
         </table>
         <p style="display: none" id="overwriteCheckbox">
             <input type="checkbox" id="overwrite" name="overwrite" value="Overwrite" onclick="checkOverwrite()">
-            <label for="overwrite">Overwrite <a href="" class="link" id="existing-submission-link">existing submission</a>?</label>
+            <label for="overwrite">Create another solution in <span id="existing-submission-language">$LANGUAGE</span>? <a href="" class="link" id="existing-submission-link">See existing submission</a></label>
         </p>
         <p>
             <button class="navbutton" type="submit" onclick="" id="submitButton">Update site data</button>
@@ -64,7 +64,9 @@
     </p>
 </div>
 
-<p class="bottom-text">© 2024-20XX <a href="https://benrosenberg.info" class="link">Ben Rosenberg</a></p>
+<div class="bottom-text">
+    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img style="height:20px!important;margin-left:3px;vertical-align:middle;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:20px!important;margin-left:3px;vertical-align:middle;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""></a></p> 
+</div>
 
 <script>
     function populateDefaults() {
@@ -111,7 +113,8 @@
 
     async function retrieveData() {
         return await fetch(
-        "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+            "data.json",
+        // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
         { signal: AbortSignal.timeout(2000) }
         )
         .then((response) => {
@@ -131,7 +134,11 @@
         });
     }
 
-    function alreadySubmitted(problemID) {
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function alreadySubmitted(problemID, language) {
         var submitButton = document.getElementById('submitButton');
         submitButton.disabled = true;
         var overwriteCheckbox = document.getElementById('overwriteCheckbox');
@@ -140,6 +147,8 @@
         const url = new URL(window.location.origin + "/problem.html");
         url.searchParams.set("problem", problemID);
         existingSubmissionLink.setAttribute('href', url.href);
+        existingSubmissionLanguage = document.getElementById("existing-submission-language");
+        existingSubmissionLanguage.innerText = capitalizeFirstLetter(language);
     }
 
     function notAlreadySubmitted() {
@@ -151,16 +160,29 @@
 
     function checkOverwrite() {
         var submitButton = document.getElementById('submitButton');
-        submitButton.disabled = false;
+        var overwriteCheckbox = document.getElementById('overwrite');
+        submitButton.disabled = !overwriteCheckbox.checked;
     }
 
     function generateSubmissionData() {
         retrieveData().then((current_data) => {
             number = document.getElementById('problem-number').value;
-            // if number already in data, grey out submission until 
-            // "overwrite" flag is checked
+            language = document.getElementById('problem-language').value;
+            // if number already in data AND language already in submission set,
+            // grey out submission until "overwrite" flag is checked
+            var exists = false;
+            var languageExists = false;
+            var problemData = {};
             if (Object.keys(current_data).includes(number)) {
-                alreadySubmitted(number);
+                exists = true;
+                problemData = current_data[number];
+                let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
+                if (uniqueLanguages.has(language)) {
+                    languageExists = true;
+                    alreadySubmitted(number, language);
+                } else {
+                    notAlreadySubmitted();
+                }
             } else {
                 notAlreadySubmitted();
             }
@@ -172,9 +194,18 @@
             }
             });
             difficulty = document.getElementById('problem-difficulty').value;
-            date = document.getElementById('problem-date').value;
-            language = document.getElementById('problem-language').value;
+            date = exists ? problemData.date : document.getElementById('problem-date').value;
             solution = document.getElementById('problem-solution').value;
+            if (exists) {
+                solutions = problemData.solutions;
+            } else {
+                solutions = [];
+            }
+            solutions.push({
+                "date" : document.getElementById('problem-date').value,
+                "solution" : solution,
+                "language" : language
+            });
             var data = {};
             data[number] = {
                 "number" : number,
@@ -182,8 +213,7 @@
                 "tags" : tags,
                 "difficulty" : difficulty,
                 "date" : date,
-                "solution" : solution,
-                "language" : language
+                "solutions" : solutions
             };
             output = document.getElementById('output');
             output.innerText = JSON.stringify(data, null, '    ');
