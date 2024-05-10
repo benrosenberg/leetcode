@@ -25,7 +25,7 @@ function setColorsByTheme() {
     easy: { light: "#00932c", dark: "#00ba38" },
     medium: { light: "#cc8400", dark: "#d38900" },
     hard: { light: "#ca1400", dark: "#d71600" },
-    buttonborderthickness: { light: "1px", dark: "2px" }
+    buttonborderthickness: { light: "1px", dark: "2px" },
   };
   const colorMode = getInitialColorMode();
   const root = document.documentElement;
@@ -34,6 +34,16 @@ function setColorsByTheme() {
     root.style.setProperty(cssVarName, colorByTheme[colorMode]);
   });
   root.style.setProperty("--initial-color-mode", colorMode);
+  const imageURLS = {
+    "cc-svg" : { light: "images/cc.svg", dark: "images/cc_dark.svg" },
+    "by-svg" : { light: "images/by.svg", dark: "images/by_dark.svg" },
+  };
+  Object.entries(imageURLS).forEach(([name, colorByTheme]) => {
+    var imageTags = document.getElementsByClassName(name);
+    for (let imageTag of imageTags) {
+      imageTag.src = colorByTheme[colorMode];
+    }
+  });
 }
 
 function toggleColorMode() {
