@@ -251,7 +251,9 @@
   function createTableRow(problemData) {
     var tagCell = "";
     var numTagsToShow = 3;
-    var tagsToShow = problemData.tags.slice(0, numTagsToShow);
+    sortedTags = problemData.tags;
+    sortedTags.sort();
+    var tagsToShow = sortedTags.slice(0, numTagsToShow);
     tagsToShow.forEach((tag, tagIndex) => {
       if (tagIndex < problemData.tags.length - 1) {
         tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>, `;
@@ -265,7 +267,8 @@
 
     var languageCell = "";
     let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
-    uniqueLanguages.forEach((language) => {
+    sortedUniqueLanguages = Array.from(uniqueLanguages).sort();
+    sortedUniqueLanguages.forEach((language) => {
       if (languageCell.length == 0) {
         languageCell += `<a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
       } else {

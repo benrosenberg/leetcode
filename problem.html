@@ -124,15 +124,16 @@
         dateTag = document.getElementById('date');
         dateTag.innerHTML = 'first solved on ' + problemData.date + ` <a style="font-weight: normal;" href="submit.html?problem=${problemData.number}" class="link">(add another solution?)</a>`;
         tagTag = document.getElementById('tags');
-        problemData.tags.forEach(tag => {
+        sortedTags = problemData.tags.sort();
+        sortedTags.forEach(tag => {
             tagTag.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag}</span></a> `
         });
         languageTag = document.getElementById('languages');
         let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
-        uniqueLanguages.forEach(language => {
+        let sortedUniqueLanguages = Array.from(uniqueLanguages).sort();
+        sortedUniqueLanguages.forEach(language => {
             languageTag.innerHTML += `<a onclick="goToLanguage('${language}')"><span class="language-tag">${language}</span></a> `
         });
-        let sortedUniqueLanguages = Array.from(uniqueLanguages).sort();
         let defaultLanguage = sortedUniqueLanguages[0];
         let solutionTag = document.getElementById('solution');
         let tabLinks = "";
