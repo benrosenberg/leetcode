@@ -122,7 +122,7 @@
         difficultyTag = document.getElementById('difficulty');
         difficultyTag.innerHTML = `<a onclick="goToDifficulty('${problemData.difficulty}')"><span class="difficulty ${problemData.difficulty}">${capitalizeFirstLetter(problemData.difficulty)}</span>`;
         dateTag = document.getElementById('date');
-        dateTag.innerHTML = 'first solved on ' + problemData.date;
+        dateTag.innerHTML = 'first solved on ' + problemData.date + ` <a style="font-weight: normal;" href="submit.html?problem=${problemData.number}" class="link">(add another solution?)</a>`;
         tagTag = document.getElementById('tags');
         problemData.tags.forEach(tag => {
             tagTag.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag}</span></a> `

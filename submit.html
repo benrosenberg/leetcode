@@ -81,6 +81,21 @@
         language.value = 'python';
     }
 
+    function populateExistingProblemData() {
+        number = document.getElementById('problem-number').value;
+        retrieveData().then((current_data) => {
+            if (Object.keys(current_data).includes(number)) {
+                title = document.getElementById('problem-title');
+                difficulty = document.getElementById('problem-difficulty');
+                tags = document.getElementById('problem-tags');
+                problemData = current_data[number];
+                title.value = problemData.title;
+                difficulty.value = problemData.difficulty;
+                tags.value = problemData.tags.join(', ');
+            }
+        });
+    }
+
     function submitSolution() {
         submitURL = "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/submit-lc";
         (async () => {
@@ -220,8 +235,21 @@
         });
     }
 
+    const numberField = document.getElementById('problem-number');
+
+    numberField.addEventListener("focusout", (event) => {
+        populateExistingProblemData();
+    });
+
     window.onload = function() {
         populateDefaults();
+        
+        const url = new URL(window.location.href);
+        const problemID = url.searchParams.get("problem");
+        if (problemID != null) {
+            numberField.value = problemID;
+            populateExistingProblemData();
+        }
     }
 </script>
 
