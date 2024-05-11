@@ -10,6 +10,7 @@ Frontend for LeetCode submissions
 - [done] add an "add solution" button for the existing problem pages
 - [done] sort languages alphabetically in the column in index.html (and in the languages list in problem.html)
 - [done] sort tags alphabetically in the column in index.html (and in the tags list in problem.html)
+- [done] set overall date field for problem to minimum of existing dates and newly added date
 - make dropdown for language selection based on existing languages used across all problems (requires being able to add items not in dropdown)
 - make dropdown for tag selection based on existing tag used across all problems (requires being able to add items not in dropdown)
 - page to see stats over time and/or charts based on date, language, etc. in html5 canvas

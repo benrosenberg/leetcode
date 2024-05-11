@@ -221,13 +221,14 @@
                 "solution" : solution,
                 "language" : language
             });
+            minDate = solutions.map((s) => s.date).sort()[0];
             var data = {};
             data[number] = {
                 "number" : number,
                 "title" : title,
                 "tags" : tags,
                 "difficulty" : difficulty,
-                "date" : date,
+                "date" : minDate,
                 "solutions" : solutions
             };
             output = document.getElementById('output');
