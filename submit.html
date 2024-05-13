@@ -25,7 +25,7 @@
 
     <div>
         <table cellpadding="4">
-            <tr><td style="font-size: large;">Number</td><td><input type="text" id="problem-number"></td></tr>
+            <tr><td style="font-size: large;">Number</td><td><input type="text" id="problem-number"> <span style="display: none; color: red;" id="problem-number-validity"></span></td></tr>
             <tr><td style="font-size: large;">Title</td><td><input type="text" id="problem-title"></td></tr>
             <tr><td style="font-size: large;">Tags</td><td><input type="text" id="problem-tags" list="tag-list"><datalist id="tag-list"></datalist></td></tr>
             <tr><td style="font-size: large;">Difficulty</td><td><select id="problem-difficulty"><option value="easy" class="easy">Easy</option><option value="medium" class="medium">Medium</option><option value="hard" class="hard">Hard</option></select></td></tr>
@@ -116,6 +116,13 @@
                 title.value = problemData.title;
                 difficulty.value = problemData.difficulty;
                 tags.value = problemData.tags.join(', ');
+            } else {
+                title = document.getElementById('problem-title');
+                difficulty = document.getElementById('problem-difficulty');
+                tags = document.getElementById('problem-tags');
+                title.value = '';
+                difficulty.value = '';
+                tags.value = '';
             }
         });
     }
@@ -260,10 +267,36 @@
         });
     }
 
+    function stringIsNumeric(s) {
+        for (var i = 0; i < s.length; i++) {
+            let c = s.charAt(i);
+            if (!(c >= '0' && c <= '9')) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     const numberField = document.getElementById('problem-number');
+    const numberValidityField = document.getElementById('problem-number-validity');
+
+    function checkNumberValidity() {
+        let s = numberField.value;
+        if (!stringIsNumeric(s)) {
+            numberValidityField.innerText = `Invalid number: "${s}"`;
+            numberValidityField.style.display = 'initial';
+        } else {
+            numberValidityField.innerText = '';
+            numberValidityField.style.display = 'none';
+        }
+    }
 
     numberField.addEventListener("focusout", (event) => {
         populateExistingProblemData();
+    });
+
+    numberField.addEventListener("keyup", (event) => {
+        checkNumberValidity();
     });
 
     window.onload = function() {

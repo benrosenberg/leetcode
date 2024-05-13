@@ -14,7 +14,7 @@ Frontend for LeetCode submissions
 - [done] fix issue with some code not displaying correctly in problem.html due to `<` and `>` signs being inserted as innerHTML rather than innerText - need to escape them correctly
 - [done] make dropdown for language selection based on existing languages used across all problems (requires being able to add items not in dropdown)
 - [done] make dropdown for tag selection based on existing tag used across all problems (requires being able to add items not in dropdown)
-- add data validation to number field in submit.html
+- [done] add data validation to number field in submit.html
 - page to see stats over time and/or charts based on date, language, etc. in html5 canvas
 - go back and redo a bunch of python solutions in rust as practice
 - add creative commons license to main/personal site (benrosenberg.info)
