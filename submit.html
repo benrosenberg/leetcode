@@ -27,10 +27,10 @@
         <table cellpadding="4">
             <tr><td style="font-size: large;">Number</td><td><input type="text" id="problem-number"></td></tr>
             <tr><td style="font-size: large;">Title</td><td><input type="text" id="problem-title"></td></tr>
-            <tr><td style="font-size: large;">Tags</td><td><input type="text" id="problem-tags"></td></tr>
+            <tr><td style="font-size: large;">Tags</td><td><input type="text" id="problem-tags" list="tag-list"><datalist id="tag-list"></datalist></td></tr>
             <tr><td style="font-size: large;">Difficulty</td><td><select id="problem-difficulty"><option value="easy" class="easy">Easy</option><option value="medium" class="medium">Medium</option><option value="hard" class="hard">Hard</option></select></td></tr>
             <tr><td style="font-size: large;">Date</td><td><input type="date" id="problem-date"></td></tr>
-            <tr><td style="font-size: large;">Language</td><td><input type="text" id="problem-language"></td></tr>
+            <tr><td style="font-size: large;">Language</td><td><input type="text" id="problem-language" list="language-list"><datalist id="language-list"></datalist></td></tr>
             <tr><td style="font-size: large;">Solution</td><td><textarea id="problem-solution" rows="20" cols="60"></textarea></td></tr>
         </table>
         <p>
@@ -69,6 +69,30 @@
   </div>
 
 <script>
+    function populateDynamicDropdownLists(data) {
+        let uniqueLanguages = new Set();
+        let uniqueTags = new Set();
+        Object.keys(data).forEach((key) => {
+            let problemData = data[key];
+            problemData.tags.forEach((tag) => {
+                uniqueTags.add(tag);
+            });
+            problemData.solutions.forEach((solution) => {
+                uniqueLanguages.add(solution.language);
+            });
+        });
+        let sortedLanguages = Array.from(uniqueLanguages).sort();
+        let languageList = document.getElementById('language-list');
+        let sortedTags = Array.from(uniqueTags).sort();
+        let tagList = document.getElementById('tag-list');
+        sortedTags.forEach((tag) => {
+            tagList.innerHTML += `<option value="${tag}">${tag}</option>`;
+        });
+        sortedLanguages.forEach((language) => {
+            languageList.innerHTML += `<option value="${language}">${language}</option>`;
+        });
+    }
+
     function populateDefaults() {
         // default to date=today and language=python
         var date = document.getElementById('problem-date');
@@ -251,6 +275,8 @@
             numberField.value = problemID;
             populateExistingProblemData();
         }
+
+        retrieveData().then((data) => populateDynamicDropdownLists(data));
     }
 </script>
 
