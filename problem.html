@@ -115,6 +115,15 @@
         return problemData.number + '. ' + problemData.title;
     }
 
+    function escapeHTML(codeString) {
+        return codeString
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     function populate(problemData) {
         // fill in current problem data
         titleTag = document.getElementById('title');
@@ -154,7 +163,7 @@
             initialLength = languageSolutionsCombined.length;
             languageSolutions.forEach((soln) => {
                 if (languageSolutionsCombined.length > initialLength) {languageSolutionsCombined += "<br>";}
-                languageSolutionsCombined += `<pre><code class="language-${language} microlight">${soln.solution}</code></pre><span class="solution-date">${soln.date}</span>`;
+                languageSolutionsCombined += `<pre><code class="language-${language} microlight">${escapeHTML(soln.solution)}</code></pre><span class="solution-date">${soln.date}</span>`;
             });
             languageSolutionsCombined += '</div>';
             solutions += `<div class="solution-tab" id="solution-${language}" style="display: none;">${languageSolutionsCombined}</div>`;
