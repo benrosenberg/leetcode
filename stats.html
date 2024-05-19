@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=yes"
+  />
+  <title>LeetCode Solutions</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+</head>
+
+<div class="page">
+  <div class="content">
+    <div id="header">
+      <h1 id="title" class="title">
+        <a href="/" class="overview-title">LeetCode Solutions</a>
+      </h1>
+      <span class="theme-toggle"
+        ><button class="theme-toggle-button" onclick="toggleColorMode();">
+          toggle theme
+        </button></span
+      >
+    </div>
+
+    <h4 style="font-weight: 400">
+      by
+      <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
+      | <a class="link" href="about.html">About this site</a> |
+      <a class="link" href="submit.html">Submit a solution</a>
+    </h4>
+
+    <h3>Statistics</h3>
+
+    <p>(placeholder)</p>
+
+    <p>
+        <a href="/" class="link">Return to problem set overview</a>
+    </p>
+  </div>
+</div>
+
+<div class="bottom-text">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/cc_dark.svg" alt=""><img class="by-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg" alt=""></a></p> 
+</div>
+
+<script>
+  AbortSignal.timeout ??= function timeout(ms) {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), ms);
+    return ctrl.signal;
+  };
+
+  async function retrieveData() {
+    return await fetch(
+      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+      // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
+      { signal: AbortSignal.timeout(2000) }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(
+          "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+        );
+      });
+  }
+</script>
+
+<script src="theme.js"></script>
