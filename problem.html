@@ -135,13 +135,13 @@
         tagTag = document.getElementById('tags');
         sortedTags = problemData.tags.sort();
         sortedTags.forEach(tag => {
-            tagTag.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag}</span></a> `
+            tagTag.insertAdjacentHTML('beforeend', `<a onclick="goToTag('${tag}')"><span class="tag">${tag}</span></a> `);
         });
         languageTag = document.getElementById('languages');
         let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
         let sortedUniqueLanguages = Array.from(uniqueLanguages).sort();
         sortedUniqueLanguages.forEach(language => {
-            languageTag.innerHTML += `<a onclick="goToLanguage('${language}')"><span class="language-tag">${language}</span></a> `
+            languageTag.insertAdjacentHTML('beforeend', `<a onclick="goToLanguage('${language}')"><span class="language-tag">${language}</span></a> `);
         });
         let defaultLanguage = sortedUniqueLanguages[0];
         let solutionTag = document.getElementById('solution');

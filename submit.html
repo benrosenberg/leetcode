@@ -86,10 +86,10 @@
         let sortedTags = Array.from(uniqueTags).sort();
         let tagList = document.getElementById('tag-list');
         sortedTags.forEach((tag) => {
-            tagList.innerHTML += `<option value="${tag}">${tag}</option>`;
+            tagList.insertAdjacentHTML('beforeend', `<option value="${tag}">${tag}</option>`);
         });
         sortedLanguages.forEach((language) => {
-            languageList.innerHTML += `<option value="${language}">${language}</option>`;
+            languageList.insertAdjacentHTML('beforeend', `<option value="${language}">${language}</option>`);
         });
     }
 

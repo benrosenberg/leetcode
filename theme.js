@@ -56,6 +56,12 @@ function toggleColorMode() {
         console.log(`Encountered strange color mode: ${colorMode}`);
     }
     setColorsByTheme();
+    try {
+      // re-render any canvas elements if present
+      renderCanvas();
+    } catch {
+      // fail silently if function does not exist
+    }
 }
 
 setColorsByTheme();

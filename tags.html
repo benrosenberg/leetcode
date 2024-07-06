@@ -110,7 +110,7 @@
   function displayTags(sortedTags, tagCounts) {
     var tags = document.getElementById('tags');
     sortedTags.forEach((tag) => {
-        tags.innerHTML += `<a onclick="goToTag('${tag}')"><span class="tag">${tag} (${tagCounts[tag]})</span></a> `;
+        tags.insertAdjacentHTML('beforeend', `<a onclick="goToTag('${tag}')"><span class="tag">${tag} (${tagCounts[tag]})</span></a> `);
     });
   }
 

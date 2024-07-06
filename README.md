@@ -15,7 +15,8 @@ Frontend for LeetCode submissions
 - [done] make dropdown for language selection based on existing languages used across all problems (requires being able to add items not in dropdown)
 - [done] make dropdown for tag selection based on existing tag used across all problems (requires being able to add items not in dropdown)
 - [done] add data validation to number field in submit.html
-- make it so that data is *not* cleared when putting in a number for a problem that does not exist yet
+- [done] make it so that data is *not* cleared when putting in a number for a problem that does not exist yet
+- add an "edit" page that can be accessed from a problem page, which allows for editing the json on that problem directly and resubmitting (to fix small mistakes) (note - could be accomplished by just adding the ability to edit the json directly/manually before submitting. hitting "add new solution" on the existing problem page will make it so that the old one can also be changed then.)
 - fix tag dropdown to support adding multiple comma-separated entries rather than just one tag
 - update small.json file on server to new schema (or just replace with data.json)
 - allow Ctrl+clicks on links somehow - possibly switch to using href instead of using onClick actions for link html tags

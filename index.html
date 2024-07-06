@@ -244,7 +244,7 @@
       page * ITEMS_PER_PAGE
     );
     keys.forEach((key) => {
-      table.innerHTML += createTableRow(data[key]);
+      table.insertAdjacentHTML('beforeend', createTableRow(data[key]));
     });
   }
 
@@ -343,11 +343,11 @@
   function markAsFilteredToDifficulty(difficulty) {
     var filterText = document.getElementById("difficulty-filter");
     filterText.style.display = "block";
-    filterText.innerHTML +=
+    filterText.insertAdjacentHTML('beforeend',
       " " +
       `<span class="difficulty ${difficulty}">${capitalizeFirstLetter(
         difficulty
-      )}</span>`;
+      )}</span>`);
   }
 
   function markAsFilteredToLanguage(language) {
@@ -434,20 +434,20 @@
     // console.log(leftmostPage);
     // console.log(rightmostPage);
     if (displayLeft) {
-      pageBar.innerHTML += (
+      pageBar.insertAdjacentHTML('beforeend',
         `<button class="page-bar-move-button" id="left-arrow-max" onclick="goToPage(1)">&lt;&lt;</button>`
         + `<button class="page-bar-move-button" id="left-arrow-one" onclick="goToPage(${page-1})">&lt;</button>`
       );
     }
     for (let i = leftmostPage; i <= rightmostPage; i++) {
       if (i == page) {
-        pageBar.innerHTML += `<span class="page-bar-indicator">${i}</span>`;
+        pageBar.insertAdjacentHTML('beforeend', `<span class="page-bar-indicator">${i}</span>`);
       } else {
-        pageBar.innerHTML += `<button class="page-bar-button" onclick="goToPage(${i})">${i}</button>`;
+        pageBar.insertAdjacentHTML('beforeend', `<button class="page-bar-button" onclick="goToPage(${i})">${i}</button>`);
       }
     }
     if (displayRight) {
-      pageBar.innerHTML += (
+      pageBar.insertAdjacentHTML('beforeend',
         `<button class="page-bar-move-button" id="right-arrow-one" onclick="goToPage(${page+1})">&gt;</button>`
         + `<button class="page-bar-move-button" id="right-arrow-max" onclick="goToPage(${totalPages})">&gt;&gt;</button>`
       );

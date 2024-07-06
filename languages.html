@@ -111,7 +111,7 @@
   function displayLanguages(sortedLanguages, languageCounts) {
     var languages = document.getElementById('languages');
     sortedLanguages.forEach((language) => {
-        languages.innerHTML += `<a onclick="goToLanguage('${language}')"><span class="language-tag">${language} (${languageCounts[language]})</span></a> `;
+        languages.insertAdjacentHTML('beforeend', `<a onclick="goToLanguage('${language}')"><span class="language-tag">${language} (${languageCounts[language]})</span></a> `);
     });
   }
 
