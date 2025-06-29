@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>LeetCode Solutions</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/png" href="favicon.png">
-  </head>
+</head>
 
 <div class="content">
     <div id="header">
         <h1 id="title" class="title">About</h1>
-        <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
+        <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle
+                theme</button></span>
     </div>
 
     <h4 style="font-weight: 400">
@@ -19,20 +21,46 @@
         <a class="link" href="submit.html">Submit a solution</a>
     </h4>
 
+    <div class="static-content-alert" role="alert">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <!-- Info icon (SVG) -->
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div>
+                <p class="font-bold">Important Update!</p>
+                <p class="text-sm">
+                    Due to infrequent use, the dynamic server for this site has been permanently decommissioned.
+                    You are now viewing an archived version with static content. Functionality requiring
+                    real-time server interaction may be limited.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <p>
         <a href="https://github.com/benrosenberg/leetcode" class="link">GitHub link</a>
     </p>
 
     <p>
-        This site is a frontend to display the contents of a JSON file like <a href="/data.json" class="link">this one</a>, which contains submissions I've made to <a href="https://leetcode.com" class="link">LeetCode</a>.
+        This site is a frontend to display the contents of a JSON file like <a href="/data.json" class="link">this
+            one</a>, which contains submissions I've made to <a href="https://leetcode.com" class="link">LeetCode</a>.
     </p>
 
     <p>
-        The only file that changes on this site at all is the abovementioned JSON file. All other content is either static or generated dynamically using client-side JavaScript after pulling in that JSON file, which is explicitly served by nginx and allows Cross-Origin Resource Sharing (CORS) so that it can be referenced on this static site.
+        The only file that changes on this site at all is the abovementioned JSON file. All other content is either
+        static or generated dynamically using client-side JavaScript after pulling in that JSON file, which is
+        explicitly served by nginx and allows Cross-Origin Resource Sharing (CORS) so that it can be referenced on this
+        static site.
     </p>
 
     <p>
-        New submissions are added via an authenticated POST request to a CORS-whitelisted endpoint which updates the relevant JSON file.
+        New submissions are added via an authenticated POST request to a CORS-whitelisted endpoint which updates the
+        relevant JSON file.
     </p>
 
     <p>
@@ -45,7 +73,15 @@
 </div>
 
 <div class="bottom-text">
-    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/cc_dark.svg" alt=""><img class="by-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg" alt=""></a></p> 
-  </div>
+    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title"
+            rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span
+            property="cc:attributionName">Ben Rosenberg</span> is licensed under <a
+            href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank"
+            rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img
+                class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;"
+                src="images/cc_dark.svg" alt=""><img class="by-svg"
+                style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg"
+                alt=""></a></p>
+</div>
 
 <script src="theme.js"></script>

@@ -1,79 +1,139 @@
 <!DOCTYPE html>
+
 <head>
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=yes"
-  />
-  <title>LeetCode Solutions</title>
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>LeetCode Solutions</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
 </head>
 
 <div class="page">
-  <div class="content">
-    <div id="header">
-      <h1 id="title" class="title">
-        <a href="/" class="overview-title">LeetCode Solutions</a>
-      </h1>
-      <span class="theme-toggle"
-        ><button class="theme-toggle-button" onclick="toggleColorMode();">
-          toggle theme
-        </button></span
-      >
+    <div class="content">
+        <div id="header">
+            <h1 id="title" class="title">
+                <a href="/" class="overview-title">LeetCode Solutions</a>
+            </h1>
+            <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">
+                    toggle theme
+                </button></span>
+        </div>
+
+        <h4 style="font-weight: 400">
+            by
+            <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
+            | <a class="link" href="about.html">About this site</a> |
+            <a class="link" href="submit.html">Submit a solution</a>
+        </h4>
+
+        <div class="static-content-alert" role="alert">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <!-- Info icon (SVG) -->
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-bold">Important Update!</p>
+                    <p class="text-sm">
+                        Due to infrequent use, the dynamic server for this site has been permanently decommissioned.
+                        You are now viewing an archived version with static content. Functionality requiring
+                        real-time server interaction may be limited.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h3>Statistics</h3>
+
+        <p>WIP</p>
+
+        <canvas id="canvas" width="700" height="600"></canvas>
+
+        <p>
+            <a href="/" class="link">Return to problem set overview</a>
+        </p>
     </div>
-
-    <h4 style="font-weight: 400">
-      by
-      <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
-      | <a class="link" href="about.html">About this site</a> |
-      <a class="link" href="submit.html">Submit a solution</a>
-    </h4>
-
-    <h3>Statistics</h3>
-
-    <p>WIP</p>
-
-    <canvas id="canvas" width="700" height="600"></canvas>
-
-    <p>
-        <a href="/" class="link">Return to problem set overview</a>
-    </p>
-  </div>
 </div>
 
 <div class="bottom-text">
-  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/cc_dark.svg" alt=""><img class="by-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg" alt=""></a></p> 
+    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title"
+            rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span
+            property="cc:attributionName">Ben Rosenberg</span> is licensed under <a
+            href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank"
+            rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img
+                class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;"
+                src="images/cc_dark.svg" alt=""><img class="by-svg"
+                style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg"
+                alt=""></a></p>
 </div>
 
 <script>
-  AbortSignal.timeout ??= function timeout(ms) {
-    const ctrl = new AbortController();
-    setTimeout(() => ctrl.abort(), ms);
-    return ctrl.signal;
-  };
+    AbortSignal.timeout ??= function timeout(ms) {
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), ms);
+        return ctrl.signal;
+    };
 
-  async function retrieveData() {
-    return await fetch(
-      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
-      // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
-      { signal: AbortSignal.timeout(2000) }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
-        } else {
-          return response.json();
+    //   async function retrieveData() {
+    //     return await fetch(
+    //       "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+    //       // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
+    //       { signal: AbortSignal.timeout(2000) }
+    //     )
+    //       .then((response) => {
+    //         if (!response.ok) {
+    //           return response.text().then((text) => {
+    //             throw new Error(text);
+    //           });
+    //         } else {
+    //           return response.json();
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //         alert(
+    //           "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+    //         );
+    //       });
+    //   }
+
+    /**
+     * Asynchronously retrieves data from a local JSON file.
+     * This function attempts to fetch 'leetcode-solutions.json' from the same directory
+     * as the script. It handles potential network or parsing errors gracefully.
+     *
+     * @returns {Promise<Object|undefined>} A promise that resolves to the JSON data
+     * if the fetch is successful, or undefined
+     * if an error occurs.
+     */
+    async function retrieveData() {
+        try {
+            // Attempt to fetch the local JSON file.
+            const response = await fetch("./leetcode-solutions.json");
+
+            // Check if the HTTP response status is OK (200-299).
+            if (!response.ok) {
+                // If the response is not OK, read the response body as text
+                // and throw an error with the text content.
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            } else {
+                // If the response is OK, parse the response body as JSON.
+                return await response.json();
+            }
+        } catch (error) {
+            // Catch any errors that occur during the fetch operation (e.g., network issues,
+            // file not found, JSON parsing errors).
+            console.error("Failed to retrieve data from leetcode-solutions.json:", error);
+            // You might want to display a user-friendly message in the UI here,
+            // for example, by updating a DOM element instead of using alert().
+            // Example: document.getElementById('message-area').textContent = 'Error loading data.';
+            return undefined; // Return undefined to indicate that data retrieval failed.
         }
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(
-          "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
-        );
-      });
-  }
+    }
 </script>
 
 <script src="theme.js"></script>

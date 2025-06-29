@@ -1,525 +1,583 @@
 <!DOCTYPE html>
+
 <head>
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=yes"
-  />
-  <title>LeetCode Solutions</title>
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>LeetCode Solutions</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
 </head>
 
 <div class="page">
-  <div class="content">
-    <div id="header">
-      <h1 id="title" class="title">
-        <a href="/" class="overview-title">LeetCode Solutions</a>
-      </h1>
-      <span class="theme-toggle"
-        ><button class="theme-toggle-button" onclick="toggleColorMode();">
-          toggle theme
-        </button></span
-      >
+    <div class="content">
+        <div id="header">
+            <h1 id="title" class="title">
+                <a href="/" class="overview-title">LeetCode Solutions</a>
+            </h1>
+            <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">
+                    toggle theme
+                </button></span>
+        </div>
+
+        <h4 style="font-weight: 400">
+            by
+            <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
+            | <a class="link" href="about.html">About this site</a> |
+            <a class="link" href="submit.html">Submit a solution</a>
+        </h4>
+
+        <div class="static-content-alert" role="alert">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <!-- Info icon (SVG) -->
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-bold">Important Update!</p>
+                    <p class="text-sm">
+                        Due to infrequent use, the dynamic server for this site has been permanently decommissioned.
+                        You are now viewing an archived version with static content. Functionality requiring
+                        real-time server interaction may be limited.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h4 id="last-solved" class="date">Latest solved on</h4>
+
+        <p id="total-solved">Total:</p>
+
+        <p style="display: none" id="tag-filter">
+            Filtering to problems tagged as:
+        </p>
+
+        <p style="display: none" id="difficulty-filter">
+            Filtering to problems of difficulty:
+        </p>
+
+        <p style="display: none" id="language-filter">
+            Filtering to problems solved in:
+        </p>
+
+        <p style="display: none" id="date-filter">
+            Filtering to problems solved on:
+        </p>
+
+        <p style="display: none" id="see-all">
+            <a href="/" class="link"> See all</a>
+        </p>
+
+        <table id="problemTable" class="problem-table" cellpadding="10"></table>
     </div>
-
-    <h4 style="font-weight: 400">
-      by
-      <a class="link" href="https://benrosenberg.info">Ben Rosenberg</a>
-      | <a class="link" href="about.html">About this site</a> |
-      <a class="link" href="submit.html">Submit a solution</a>
-    </h4>
-
-    <h4 id="last-solved" class="date">Latest solved on</h4>
-
-    <p id="total-solved">Total:</p>
-
-    <p style="display: none" id="tag-filter">
-      Filtering to problems tagged as:
-    </p>
-
-    <p style="display: none" id="difficulty-filter">
-      Filtering to problems of difficulty:
-    </p>
-
-    <p style="display: none" id="language-filter">
-      Filtering to problems solved in:
-    </p>
-
-    <p style="display: none" id="date-filter">
-      Filtering to problems solved on:
-    </p>
-
-    <p style="display: none" id="see-all">
-      <a href="/" class="link"> See all</a>
-    </p>
-
-    <table id="problemTable" class="problem-table" cellpadding="10"></table>
-  </div>
 </div>
 
 <div class="page-bar" id="page-bar">
 </div>
 
 <div class="bottom-text">
-  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/cc_dark.svg" alt=""><img class="by-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg" alt=""></a></p> 
+    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title"
+            rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span
+            property="cc:attributionName">Ben Rosenberg</span> is licensed under <a
+            href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank"
+            rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img
+                class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;"
+                src="images/cc_dark.svg" alt=""><img class="by-svg"
+                style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg"
+                alt=""></a></p>
 </div>
 
 <script>
-  const ITEMS_PER_PAGE = 20;
-  var PAGES_PER_BAR = 8;
-  if (window.matchMedia("(max-width: 900px)").matches) {
-    // mobile resolution
-    PAGES_PER_BAR = 3;
-  }
-
-  AbortSignal.timeout ??= function timeout(ms) {
-    const ctrl = new AbortController();
-    setTimeout(() => ctrl.abort(), ms);
-    return ctrl.signal;
-  };
-
-  async function retrieveData() {
-    return await fetch(
-      // "./data.json",
-      "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
-      // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
-      { signal: AbortSignal.timeout(2000) }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
-        } else {
-          return response.json();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        alert(
-          "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
-        );
-      });
-  }
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
-  function notFound(problemID) {
-    const url = new URL(window.location.href);
-    window.location = url.origin + "/404.html";
-  }
-
-  function goToProblem(problemID) {
-    const url = new URL(window.location.origin + "/problem.html");
-    url.searchParams.set("problem", problemID);
-    window.location = url;
-  }
-
-  function goToTag(tag) {
-    const url = new URL(window.location.href);
-    url.searchParams.set("tag", tag);
-    window.location = url;
-  }
-
-  function goToDifficulty(difficulty) {
-    const url = new URL(window.location.href);
-    url.searchParams.set("difficulty", difficulty);
-    window.location = url;
-  }
-
-  function goToLanguage(language) {
-    const url = new URL(window.location.href);
-    url.searchParams.set("language", language);
-    window.location = url;
-  }
-
-  function goToDate(date) {
-    const url = new URL(window.location.href);
-    url.searchParams.set("date", date);
-    window.location = url;
-  }
-
-  function goToPage(page) {
-    const url = new URL(window.location.href);
-    url.searchParams.set("page", page);
-    window.location = url;
-  }
-
-  function sortBy(key) {
-    if (isSortedBy() == key) {
-      // toggle reversed
-      if (isSortReversed()) {
-        const url = new URL(window.location.href);
-        url.searchParams.delete("sortOrder");
-        window.location = url;
-      } else {
-        const url = new URL(window.location.href);
-        url.searchParams.set("sortOrder", 'reversed');
-        window.location = url;
-      }
-    } else {
-      const url = new URL(window.location.href);
-      url.searchParams.set("sortKey", key);
-      url.searchParams.delete("sortOrder");
-      window.location = url;
+    const ITEMS_PER_PAGE = 20;
+    var PAGES_PER_BAR = 8;
+    if (window.matchMedia("(max-width: 900px)").matches) {
+        // mobile resolution
+        PAGES_PER_BAR = 3;
     }
-  }
 
-  function isSortedBy() {
-    const url = new URL(window.location.href);
-    const potentialSortKey = url.searchParams.get("sortKey");
-    var sortKey = "key";
-    if (potentialSortKey != null) {
-      var validSortingMethods = ["key", "difficulty", "date"];
-      if (validSortingMethods.includes(potentialSortKey)) {
-        sortKey = potentialSortKey;
-      }
-    }
-    return sortKey;
-  }
-
-  function isSortReversed() {
-    const url = new URL(window.location.href);
-    const potentialSortOrder = url.searchParams.get("sortOrder");
-    var sortReversed = false;
-    if (potentialSortOrder == "reversed") {
-      sortReversed = true;
-    }
-    return sortReversed;
-  }
-
-  function getProblemTitleLink(problemData) {
-    return `<a class="table-link" onclick="goToProblem(${problemData.number})">${problemData.number}. ${problemData.title}</a>`;
-  }
-
-  function populateProblemTable(data, sortBy, sortReversed, page) {
-    var table = document.getElementById("problemTable");
-    var keys = Object.keys(data);
-    if (sortBy == "key") {
-      keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-    } else if (sortBy == "difficulty") {
-      keys.sort((a, b) => {
-        var order = ["easy", "medium", "hard"];
-        var aIndex = order.indexOf(data[a]["difficulty"]);
-        var bIndex = order.indexOf(data[b]["difficulty"]);
-        if (aIndex == bIndex) {
-          return 0;
-        }
-        if (aIndex < bIndex) {
-          return -1;
-        }
-        if (aIndex > bIndex) {
-          return 1;
-        }
-      });
-    } else {
-      keys.sort((a, b) => data[a][sortBy].localeCompare(data[b][sortBy]));
-    }
-    if (sortReversed) {
-      keys.reverse();
-    }
-    var header = {
-      'key' : 'Problem', 'difficulty' : 'Difficulty', 'date' : 'Date Solved', 'language' : 'Language'
+    AbortSignal.timeout ??= function timeout(ms) {
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), ms);
+        return ctrl.signal;
     };
-    if (sortReversed) {
-      header[sortKey] += ' <span class="sort-icon">▼</span>';
-    } else {
-      header[sortKey] +=  ' <span class="sort-icon">▲</span>';
+
+    //   async function retrieveData() {
+    //     return await fetch(
+    //       // "./data.json",
+    //       "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+    //       // "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/small.json",
+    //       { signal: AbortSignal.timeout(2000) }
+    //     )
+    //       .then((response) => {
+    //         if (!response.ok) {
+    //           return response.text().then((text) => {
+    //             throw new Error(text);
+    //           });
+    //         } else {
+    //           return response.json();
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //         alert(
+    //           "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+    //         );
+    //       });
+    //   }
+
+    /**
+     * Asynchronously retrieves data from a local JSON file.
+     * This function attempts to fetch 'leetcode-solutions.json' from the same directory
+     * as the script. It handles potential network or parsing errors gracefully.
+     *
+     * @returns {Promise<Object|undefined>} A promise that resolves to the JSON data
+     * if the fetch is successful, or undefined
+     * if an error occurs.
+     */
+    async function retrieveData() {
+        try {
+            // Attempt to fetch the local JSON file.
+            const response = await fetch("./leetcode-solutions.json");
+
+            // Check if the HTTP response status is OK (200-299).
+            if (!response.ok) {
+                // If the response is not OK, read the response body as text
+                // and throw an error with the text content.
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            } else {
+                // If the response is OK, parse the response body as JSON.
+                return await response.json();
+            }
+        } catch (error) {
+            // Catch any errors that occur during the fetch operation (e.g., network issues,
+            // file not found, JSON parsing errors).
+            console.error("Failed to retrieve data from leetcode-solutions.json:", error);
+            // You might want to display a user-friendly message in the UI here,
+            // for example, by updating a DOM element instead of using alert().
+            // Example: document.getElementById('message-area').textContent = 'Error loading data.';
+            return undefined; // Return undefined to indicate that data retrieval failed.
+        }
     }
-    function wrappedHeader(key) {
-      return `<a onclick="sortBy('${key}')">${header[key]}</a>`;
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    table.innerHTML = `<tr>       \
+
+    function notFound(problemID) {
+        const url = new URL(window.location.href);
+        window.location = url.origin + "/404.html";
+    }
+
+    function goToProblem(problemID) {
+        const url = new URL(window.location.origin + "/problem.html");
+        url.searchParams.set("problem", problemID);
+        window.location = url;
+    }
+
+    function goToTag(tag) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("tag", tag);
+        window.location = url;
+    }
+
+    function goToDifficulty(difficulty) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("difficulty", difficulty);
+        window.location = url;
+    }
+
+    function goToLanguage(language) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("language", language);
+        window.location = url;
+    }
+
+    function goToDate(date) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("date", date);
+        window.location = url;
+    }
+
+    function goToPage(page) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("page", page);
+        window.location = url;
+    }
+
+    function sortBy(key) {
+        if (isSortedBy() == key) {
+            // toggle reversed
+            if (isSortReversed()) {
+                const url = new URL(window.location.href);
+                url.searchParams.delete("sortOrder");
+                window.location = url;
+            } else {
+                const url = new URL(window.location.href);
+                url.searchParams.set("sortOrder", 'reversed');
+                window.location = url;
+            }
+        } else {
+            const url = new URL(window.location.href);
+            url.searchParams.set("sortKey", key);
+            url.searchParams.delete("sortOrder");
+            window.location = url;
+        }
+    }
+
+    function isSortedBy() {
+        const url = new URL(window.location.href);
+        const potentialSortKey = url.searchParams.get("sortKey");
+        var sortKey = "key";
+        if (potentialSortKey != null) {
+            var validSortingMethods = ["key", "difficulty", "date"];
+            if (validSortingMethods.includes(potentialSortKey)) {
+                sortKey = potentialSortKey;
+            }
+        }
+        return sortKey;
+    }
+
+    function isSortReversed() {
+        const url = new URL(window.location.href);
+        const potentialSortOrder = url.searchParams.get("sortOrder");
+        var sortReversed = false;
+        if (potentialSortOrder == "reversed") {
+            sortReversed = true;
+        }
+        return sortReversed;
+    }
+
+    function getProblemTitleLink(problemData) {
+        return `<a class="table-link" onclick="goToProblem(${problemData.number})">${problemData.number}. ${problemData.title}</a>`;
+    }
+
+    function populateProblemTable(data, sortBy, sortReversed, page) {
+        var table = document.getElementById("problemTable");
+        var keys = Object.keys(data);
+        if (sortBy == "key") {
+            keys.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+        } else if (sortBy == "difficulty") {
+            keys.sort((a, b) => {
+                var order = ["easy", "medium", "hard"];
+                var aIndex = order.indexOf(data[a]["difficulty"]);
+                var bIndex = order.indexOf(data[b]["difficulty"]);
+                if (aIndex == bIndex) {
+                    return 0;
+                }
+                if (aIndex < bIndex) {
+                    return -1;
+                }
+                if (aIndex > bIndex) {
+                    return 1;
+                }
+            });
+        } else {
+            keys.sort((a, b) => data[a][sortBy].localeCompare(data[b][sortBy]));
+        }
+        if (sortReversed) {
+            keys.reverse();
+        }
+        var header = {
+            'key': 'Problem', 'difficulty': 'Difficulty', 'date': 'Date Solved', 'language': 'Language'
+        };
+        if (sortReversed) {
+            header[sortKey] += ' <span class="sort-icon">▼</span>';
+        } else {
+            header[sortKey] += ' <span class="sort-icon">▲</span>';
+        }
+        function wrappedHeader(key) {
+            return `<a onclick="sortBy('${key}')">${header[key]}</a>`;
+        }
+        table.innerHTML = `<tr>       \
         <th>${wrappedHeader('key')}</th>       \
         <th>${wrappedHeader('difficulty')}</th>    \
         <th>${wrappedHeader('date')}</th>          \
         <th>Languages (<a class="link" href="languages.html">view all</a>)</th>      \
         <th>Tags (<a class="link" href="tags.html">view all</a>)</th>             \
       </tr>`;
-    // implement paging
-    keys = keys.slice(
-      (page - 1) * ITEMS_PER_PAGE,
-      page * ITEMS_PER_PAGE
-    );
-    keys.forEach((key) => {
-      table.insertAdjacentHTML('beforeend', createTableRow(data[key]));
+        // implement paging
+        keys = keys.slice(
+            (page - 1) * ITEMS_PER_PAGE,
+            page * ITEMS_PER_PAGE
+        );
+        keys.forEach((key) => {
+            table.insertAdjacentHTML('beforeend', createTableRow(data[key]));
+        });
+    }
+
+    function createTableRow(problemData) {
+        var tagCell = "";
+        var numTagsToShow = 3;
+        sortedTags = problemData.tags;
+        sortedTags.sort();
+        var tagsToShow = sortedTags.slice(0, numTagsToShow);
+        tagsToShow.forEach((tag, tagIndex) => {
+            if (tagIndex < problemData.tags.length - 1) {
+                tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>, `;
+            } else {
+                tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>`;
+            }
+        });
+        if (problemData.tags.length > numTagsToShow) {
+            tagCell += "...";
+        }
+
+        var languageCell = "";
+        let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
+        sortedUniqueLanguages = Array.from(uniqueLanguages).sort();
+        sortedUniqueLanguages.forEach((language) => {
+            if (languageCell.length == 0) {
+                languageCell += `<a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
+            } else {
+                languageCell += `, <a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
+            }
+        });
+
+        return (
+            "<tr>" +
+            "<td>" +
+            getProblemTitleLink(problemData) +
+            "</td>" +
+            `<td><a onclick="goToDifficulty('${problemData.difficulty
+            }')"><span class="difficulty ${problemData.difficulty
+            }">${capitalizeFirstLetter(problemData.difficulty)}</span></a></td>` +
+            `<td><a onclick="goToDate('${problemData.date}')">${problemData.date}</a></td>` +
+            `<td>${languageCell}</td>` +
+            `<td>${tagCell}</td>` +
+            "</tr>"
+        );
+    }
+
+    function filterToTag(tag, data) {
+        const newData = [];
+        Object.keys(data).forEach((key) => {
+            if (data[key].tags.includes(tag)) {
+                newData.push(data[key]);
+            }
+        });
+        return newData;
+    }
+
+    function filterToDifficulty(difficulty, data) {
+        const newData = [];
+        Object.keys(data).forEach((key) => {
+            if (data[key].difficulty == difficulty) {
+                newData.push(data[key]);
+            }
+        });
+        return newData;
+    }
+
+    function filterToLanguage(language, data) {
+        const newData = [];
+        Object.keys(data).forEach((key) => {
+            let uniqueLanguages = new Set(data[key].solutions.map((solution) => solution.language));
+            if (uniqueLanguages.has(language)) {
+                newData.push(data[key]);
+            }
+        });
+        return newData;
+    }
+
+    function filterToDate(date, data) {
+        const newData = [];
+        Object.keys(data).forEach((key) => {
+            if (data[key].date == date) {
+                newData.push(data[key]);
+            }
+        });
+        return newData;
+    }
+
+    function markAsFilteredToTag(tag) {
+        var filterText = document.getElementById("tag-filter");
+        filterText.style.display = "block";
+        filterText.innerText += " " + tag;
+    }
+
+    function markAsFilteredToDifficulty(difficulty) {
+        var filterText = document.getElementById("difficulty-filter");
+        filterText.style.display = "block";
+        filterText.insertAdjacentHTML('beforeend',
+            " " +
+            `<span class="difficulty ${difficulty}">${capitalizeFirstLetter(
+                difficulty
+            )}</span>`);
+    }
+
+    function markAsFilteredToLanguage(language) {
+        var filterText = document.getElementById("language-filter");
+        filterText.style.display = "block";
+        filterText.innerText += " " + capitalizeFirstLetter(language);
+    }
+
+    function markAsFilteredToDate(date) {
+        var filterText = document.getElementById("date-filter");
+        filterText.style.display = "block";
+        filterText.innerText += " " + date;
+    }
+
+    function markAsFiltered() {
+        var filterText = document.getElementById("see-all");
+        filterText.style.display = "initial";
+    }
+
+    function setTotalSolved(data) {
+        var totalElement = document.getElementById("total-solved");
+        totalElement.innerText += " " + Object.keys(data).length;
+    }
+
+    function setLastSolved(data) {
+        var lastSolvedElement = document.getElementById("last-solved");
+        var maxDate = "2000-01-01";
+        Object.keys(data).forEach((key) => {
+            if (data[key]["date"] > maxDate) {
+                maxDate = data[key]["date"];
+            }
+        });
+        lastSolvedElement.innerText += " " + maxDate;
+    }
+
+    function pagesOfData(data) {
+        return Math.ceil(Object.keys(data).length / ITEMS_PER_PAGE);
+    }
+
+    function setPageBar(data, page) {
+        const totalPages = pagesOfData(data);
+        const pagesEitherSide = Math.floor(PAGES_PER_BAR / 2);
+        const pageBar = document.getElementById('page-bar');
+        const leftArrowMax = document.getElementById('left-arrow-max');
+        const leftArrowOne = document.getElementById('left-arrow-one');
+        const rightArrowMax = document.getElementById('right-arrow-max');
+        const rightArrowOne = document.getElementById('right-arrow-one');
+        var leftmostPage = 1;
+        var rightmostPage = totalPages;
+        var displayLeft = true;
+        var displayRight = true;
+        if ((page - pagesEitherSide <= 1) && (page + pagesEitherSide >= totalPages)) {
+            // page is within range of both start and end
+            // display page range but no arrows
+            leftmostPage = 1;
+            rightmostPage = totalPages;
+            displayLeft = false;
+            displayRight = false;
+        } else if (page - pagesEitherSide <= 1) {
+            // page is within range of start
+            // display page range and right arrows
+            leftmostPage = 1;
+            rightmostPage = Math.min(totalPages, PAGES_PER_BAR + 1);
+            displayLeft = false;
+        } else if (page + pagesEitherSide >= totalPages) {
+            // page is within range of end
+            // display left arrows and page range
+            leftmostPage = Math.max(1, totalPages - PAGES_PER_BAR);
+            rightmostPage = totalPages;
+            displayRight = false;
+        } else {
+            // page is within range of neither start nor end
+            // display left arrows, page range, and right arrows
+            leftmostPage = page - pagesEitherSide;
+            rightmostPage = page + pagesEitherSide;
+        }
+        // make sure to remove stray arrows
+        if (leftmostPage == 1) {
+            displayLeft = false;
+        }
+        if (rightmostPage == totalPages) {
+            displayRight = false;
+        }
+        // console.log(leftmostPage);
+        // console.log(rightmostPage);
+        if (displayLeft) {
+            pageBar.insertAdjacentHTML('beforeend',
+                `<button class="page-bar-move-button" id="left-arrow-max" onclick="goToPage(1)">&lt;&lt;</button>`
+                + `<button class="page-bar-move-button" id="left-arrow-one" onclick="goToPage(${page - 1})">&lt;</button>`
+            );
+        }
+        for (let i = leftmostPage; i <= rightmostPage; i++) {
+            if (i == page) {
+                pageBar.insertAdjacentHTML('beforeend', `<span class="page-bar-indicator">${i}</span>`);
+            } else {
+                pageBar.insertAdjacentHTML('beforeend', `<button class="page-bar-button" onclick="goToPage(${i})">${i}</button>`);
+            }
+        }
+        if (displayRight) {
+            pageBar.insertAdjacentHTML('beforeend',
+                `<button class="page-bar-move-button" id="right-arrow-one" onclick="goToPage(${page + 1})">&gt;</button>`
+                + `<button class="page-bar-move-button" id="right-arrow-max" onclick="goToPage(${totalPages})">&gt;&gt;</button>`
+            );
+        }
+    }
+
+    retrieveData().then((data) => {
+        const url = new URL(window.location.href);
+        const tag = url.searchParams.get("tag");
+        var filtered = false;
+        var dataToUse = data;
+        if (tag != null) {
+            dataToUse = filterToTag(tag, dataToUse);
+            markAsFilteredToTag(tag);
+            filtered = true;
+        }
+
+        const difficulty = url.searchParams.get("difficulty");
+        if (difficulty != null) {
+            dataToUse = filterToDifficulty(difficulty, dataToUse);
+            markAsFilteredToDifficulty(difficulty);
+            filtered = true;
+        }
+
+        const language = url.searchParams.get("language");
+        if (language != null) {
+            dataToUse = filterToLanguage(language, dataToUse);
+            markAsFilteredToLanguage(language);
+            filtered = true;
+        }
+
+        const date = url.searchParams.get("date");
+        if (date != null) {
+            dataToUse = filterToDate(date, dataToUse);
+            markAsFilteredToDate(date);
+            filtered = true;
+        }
+
+        if (filtered) {
+            markAsFiltered();
+        }
+
+        var page = 1;
+        const pageParam = url.searchParams.get("page");
+        if (pageParam != null) {
+            page = parseInt(pageParam, 10);
+            if (page == NaN) {
+                page = 1;
+            }
+        }
+
+        sortKey = isSortedBy();
+        sortReversed = isSortReversed();
+
+        setTotalSolved(dataToUse);
+
+        setLastSolved(dataToUse);
+
+        // only indicate pagination if necessary
+        if (Object.keys(dataToUse).length > ITEMS_PER_PAGE) {
+            setPageBar(dataToUse, page);
+        }
+
+        // if page is above max page for this data,
+        // set page to max page
+        const totalPages = pagesOfData(dataToUse);
+        if (page > totalPages) {
+            goToPage(totalPages);
+        }
+
+        populateProblemTable(dataToUse, sortKey, sortReversed, page);
     });
-  }
-
-  function createTableRow(problemData) {
-    var tagCell = "";
-    var numTagsToShow = 3;
-    sortedTags = problemData.tags;
-    sortedTags.sort();
-    var tagsToShow = sortedTags.slice(0, numTagsToShow);
-    tagsToShow.forEach((tag, tagIndex) => {
-      if (tagIndex < problemData.tags.length - 1) {
-        tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>, `;
-      } else {
-        tagCell += `<a class="table-link" onclick="goToTag('${tag}')">${tag}</a>`;
-      }
-    });
-    if (problemData.tags.length > numTagsToShow) {
-      tagCell += "...";
-    }
-
-    var languageCell = "";
-    let uniqueLanguages = new Set(problemData.solutions.map((solution) => solution.language));
-    sortedUniqueLanguages = Array.from(uniqueLanguages).sort();
-    sortedUniqueLanguages.forEach((language) => {
-      if (languageCell.length == 0) {
-        languageCell += `<a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
-      } else {
-        languageCell += `, <a class="table-link" onclick="goToLanguage('${language}')">${capitalizeFirstLetter(language)}</a>`;
-      }
-    });
-
-    return (
-      "<tr>" +
-      "<td>" +
-      getProblemTitleLink(problemData) +
-      "</td>" +
-      `<td><a onclick="goToDifficulty('${
-        problemData.difficulty
-      }')"><span class="difficulty ${
-        problemData.difficulty
-      }">${capitalizeFirstLetter(problemData.difficulty)}</span></a></td>` +
-      `<td><a onclick="goToDate('${problemData.date}')">${problemData.date}</a></td>` +
-      `<td>${languageCell}</td>` +
-      `<td>${tagCell}</td>` +
-      "</tr>"
-    );
-  }
-
-  function filterToTag(tag, data) {
-    const newData = [];
-    Object.keys(data).forEach((key) => {
-      if (data[key].tags.includes(tag)) {
-        newData.push(data[key]);
-      }
-    });
-    return newData;
-  }
-
-  function filterToDifficulty(difficulty, data) {
-    const newData = [];
-    Object.keys(data).forEach((key) => {
-      if (data[key].difficulty == difficulty) {
-        newData.push(data[key]);
-      }
-    });
-    return newData;
-  }
-
-  function filterToLanguage(language, data) {
-    const newData = [];
-    Object.keys(data).forEach((key) => {
-      let uniqueLanguages = new Set(data[key].solutions.map((solution) => solution.language));
-      if (uniqueLanguages.has(language)) {
-        newData.push(data[key]);
-      }
-    });
-    return newData;
-  }
-
-  function filterToDate(date, data) {
-    const newData = [];
-    Object.keys(data).forEach((key) => {
-      if (data[key].date == date) {
-        newData.push(data[key]);
-      }
-    });
-    return newData;
-  }
-
-  function markAsFilteredToTag(tag) {
-    var filterText = document.getElementById("tag-filter");
-    filterText.style.display = "block";
-    filterText.innerText += " " + tag;
-  }
-
-  function markAsFilteredToDifficulty(difficulty) {
-    var filterText = document.getElementById("difficulty-filter");
-    filterText.style.display = "block";
-    filterText.insertAdjacentHTML('beforeend',
-      " " +
-      `<span class="difficulty ${difficulty}">${capitalizeFirstLetter(
-        difficulty
-      )}</span>`);
-  }
-
-  function markAsFilteredToLanguage(language) {
-    var filterText = document.getElementById("language-filter");
-    filterText.style.display = "block";
-    filterText.innerText += " " + capitalizeFirstLetter(language);
-  }
-
-  function markAsFilteredToDate(date) {
-    var filterText = document.getElementById("date-filter");
-    filterText.style.display = "block";
-    filterText.innerText += " " + date;
-  }
-
-  function markAsFiltered() {
-    var filterText = document.getElementById("see-all");
-    filterText.style.display = "initial";
-  }
-
-  function setTotalSolved(data) {
-    var totalElement = document.getElementById("total-solved");
-    totalElement.innerText += " " + Object.keys(data).length;
-  }
-
-  function setLastSolved(data) {
-    var lastSolvedElement = document.getElementById("last-solved");
-    var maxDate = "2000-01-01";
-    Object.keys(data).forEach((key) => {
-      if (data[key]["date"] > maxDate) {
-        maxDate = data[key]["date"];
-      }
-    });
-    lastSolvedElement.innerText += " " + maxDate;
-  }
-
-  function pagesOfData(data) {
-    return Math.ceil(Object.keys(data).length/ITEMS_PER_PAGE);
-  }
-
-  function setPageBar(data, page) {
-    const totalPages = pagesOfData(data);
-    const pagesEitherSide = Math.floor(PAGES_PER_BAR/2);
-    const pageBar = document.getElementById('page-bar');
-    const leftArrowMax = document.getElementById('left-arrow-max');
-    const leftArrowOne = document.getElementById('left-arrow-one');
-    const rightArrowMax = document.getElementById('right-arrow-max');
-    const rightArrowOne = document.getElementById('right-arrow-one');
-    var leftmostPage = 1;
-    var rightmostPage = totalPages;
-    var displayLeft = true;
-    var displayRight = true;
-    if ((page - pagesEitherSide <= 1) && (page + pagesEitherSide >= totalPages)) {
-      // page is within range of both start and end
-      // display page range but no arrows
-      leftmostPage = 1;
-      rightmostPage = totalPages;
-      displayLeft = false;
-      displayRight = false;
-    } else if (page - pagesEitherSide <= 1) {
-      // page is within range of start
-      // display page range and right arrows
-      leftmostPage = 1;
-      rightmostPage = Math.min(totalPages, PAGES_PER_BAR + 1);
-      displayLeft = false;
-    } else if (page + pagesEitherSide >= totalPages) {
-      // page is within range of end
-      // display left arrows and page range
-      leftmostPage = Math.max(1, totalPages - PAGES_PER_BAR);
-      rightmostPage = totalPages;
-      displayRight = false;
-    } else {
-      // page is within range of neither start nor end
-      // display left arrows, page range, and right arrows
-      leftmostPage = page - pagesEitherSide;
-      rightmostPage = page + pagesEitherSide;
-    }
-    // make sure to remove stray arrows
-    if (leftmostPage == 1) {
-      displayLeft = false;
-    }
-    if (rightmostPage == totalPages) {
-      displayRight = false;
-    }
-    // console.log(leftmostPage);
-    // console.log(rightmostPage);
-    if (displayLeft) {
-      pageBar.insertAdjacentHTML('beforeend',
-        `<button class="page-bar-move-button" id="left-arrow-max" onclick="goToPage(1)">&lt;&lt;</button>`
-        + `<button class="page-bar-move-button" id="left-arrow-one" onclick="goToPage(${page-1})">&lt;</button>`
-      );
-    }
-    for (let i = leftmostPage; i <= rightmostPage; i++) {
-      if (i == page) {
-        pageBar.insertAdjacentHTML('beforeend', `<span class="page-bar-indicator">${i}</span>`);
-      } else {
-        pageBar.insertAdjacentHTML('beforeend', `<button class="page-bar-button" onclick="goToPage(${i})">${i}</button>`);
-      }
-    }
-    if (displayRight) {
-      pageBar.insertAdjacentHTML('beforeend',
-        `<button class="page-bar-move-button" id="right-arrow-one" onclick="goToPage(${page+1})">&gt;</button>`
-        + `<button class="page-bar-move-button" id="right-arrow-max" onclick="goToPage(${totalPages})">&gt;&gt;</button>`
-      );
-    }
-  }
-
-  retrieveData().then((data) => {
-    const url = new URL(window.location.href);
-    const tag = url.searchParams.get("tag");
-    var filtered = false;
-    var dataToUse = data;
-    if (tag != null) {
-      dataToUse = filterToTag(tag, dataToUse);
-      markAsFilteredToTag(tag);
-      filtered = true;
-    }
-
-    const difficulty = url.searchParams.get("difficulty");
-    if (difficulty != null) {
-      dataToUse = filterToDifficulty(difficulty, dataToUse);
-      markAsFilteredToDifficulty(difficulty);
-      filtered = true;
-    }
-
-    const language = url.searchParams.get("language");
-    if (language != null) {
-      dataToUse = filterToLanguage(language, dataToUse);
-      markAsFilteredToLanguage(language);
-      filtered = true;
-    }
-
-    const date = url.searchParams.get("date");
-    if (date != null) {
-      dataToUse = filterToDate(date, dataToUse);
-      markAsFilteredToDate(date);
-      filtered = true;
-    }
-
-    if (filtered) {
-      markAsFiltered();
-    }
-
-    var page = 1;
-    const pageParam = url.searchParams.get("page");
-    if (pageParam != null) {
-      page = parseInt(pageParam, 10);
-      if (page == NaN) {
-        page = 1;
-      }
-    }
-
-    sortKey = isSortedBy();
-    sortReversed = isSortReversed();
-
-    setTotalSolved(dataToUse);
-
-    setLastSolved(dataToUse);
-
-    // only indicate pagination if necessary
-    if (Object.keys(dataToUse).length > ITEMS_PER_PAGE) {
-      setPageBar(dataToUse, page);
-    }
-
-    // if page is above max page for this data,
-    // set page to max page
-    const totalPages = pagesOfData(dataToUse);
-    if (page > totalPages) {
-      goToPage(totalPages);
-    }
-
-    populateProblemTable(dataToUse, sortKey, sortReversed, page);
-  });
 </script>
 
 <script src="theme.js"></script>

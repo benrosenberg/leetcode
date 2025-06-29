@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+
 <head>
     <meta id="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>LeetCode Solutions</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" type="image/png" href="favicon.png">
-  </head>
+</head>
 
 <div class="content">
     <div id="header">
         <h1 id="title" class="title">Submit a solution</h1>
-        <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
+        <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle
+                theme</button></span>
     </div>
 
     <h4 style="font-weight: 400">
@@ -19,19 +21,67 @@
         <a class="link" href="submit.html">Submit a solution</a>
     </h4>
 
+    <div class="static-content-alert" role="alert">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <!-- Info icon (SVG) -->
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div>
+                <p class="font-bold">Important Update!</p>
+                <p class="text-sm">
+                    Due to infrequent use, the dynamic server for this site has been permanently decommissioned.
+                    You are now viewing an archived version with static content. Functionality requiring
+                    real-time server interaction may be limited.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <p>
         Generate a submission data item to insert into the site's JSON file of submission data.
     </p>
 
     <div>
         <table cellpadding="4">
-            <tr><td style="font-size: large;">Number</td><td><input type="text" id="problem-number"> <span style="display: none; color: red;" id="problem-number-validity"></span></td></tr>
-            <tr><td style="font-size: large;">Title</td><td><input type="text" id="problem-title"></td></tr>
-            <tr><td style="font-size: large;">Tags</td><td><input type="text" id="problem-tags" list="tag-list"><datalist id="tag-list"></datalist></td></tr>
-            <tr><td style="font-size: large;">Difficulty</td><td><select id="problem-difficulty"><option value="easy" class="easy">Easy</option><option value="medium" class="medium">Medium</option><option value="hard" class="hard">Hard</option></select></td></tr>
-            <tr><td style="font-size: large;">Date</td><td><input type="date" id="problem-date"></td></tr>
-            <tr><td style="font-size: large;">Language</td><td><input type="text" id="problem-language" list="language-list"><datalist id="language-list"></datalist></td></tr>
-            <tr><td style="font-size: large;">Solution</td><td><textarea id="problem-solution" rows="20" cols="60"></textarea></td></tr>
+            <tr>
+                <td style="font-size: large;">Number</td>
+                <td><input type="text" id="problem-number"> <span style="display: none; color: red;"
+                        id="problem-number-validity"></span></td>
+            </tr>
+            <tr>
+                <td style="font-size: large;">Title</td>
+                <td><input type="text" id="problem-title"></td>
+            </tr>
+            <tr>
+                <td style="font-size: large;">Tags</td>
+                <td><input type="text" id="problem-tags" list="tag-list"><datalist id="tag-list"></datalist></td>
+            </tr>
+            <tr>
+                <td style="font-size: large;">Difficulty</td>
+                <td><select id="problem-difficulty">
+                        <option value="easy" class="easy">Easy</option>
+                        <option value="medium" class="medium">Medium</option>
+                        <option value="hard" class="hard">Hard</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td style="font-size: large;">Date</td>
+                <td><input type="date" id="problem-date"></td>
+            </tr>
+            <tr>
+                <td style="font-size: large;">Language</td>
+                <td><input type="text" id="problem-language" list="language-list"><datalist
+                        id="language-list"></datalist></td>
+            </tr>
+            <tr>
+                <td style="font-size: large;">Solution</td>
+                <td><textarea id="problem-solution" rows="20" cols="60"></textarea></td>
+            </tr>
         </table>
         <p>
             <button class="navbutton" onclick="generateSubmissionData();">Generate</button>
@@ -44,16 +94,21 @@
 
     <div>
         <form onsubmit="submitSolution(); return false;">
-        <table cellpadding="4">
-            <tr><td style="font-size: large;">Token</td><td><input type="password" id="token"></td></tr>
-        </table>
-        <p style="display: none" id="overwriteCheckbox">
-            <input type="checkbox" id="overwrite" name="overwrite" value="Overwrite" onclick="checkOverwrite()">
-            <label for="overwrite">Create another solution in <span id="existing-submission-language">$LANGUAGE</span>? <a href="" class="link" id="existing-submission-link">See existing submission</a></label>
-        </p>
-        <p>
-            <button class="navbutton" type="submit" onclick="" id="submitButton">Update site data</button>
-        </p>
+            <table cellpadding="4">
+                <tr>
+                    <td style="font-size: large;">Token</td>
+                    <td><input type="password" id="token"></td>
+                </tr>
+            </table>
+            <p style="display: none" id="overwriteCheckbox">
+                <input type="checkbox" id="overwrite" name="overwrite" value="Overwrite" onclick="checkOverwrite()">
+                <label for="overwrite">Create another solution in <span
+                        id="existing-submission-language">$LANGUAGE</span>? <a href="" class="link"
+                        id="existing-submission-link">See existing submission</a></label>
+            </p>
+            <p>
+                <button class="navbutton" type="submit" onclick="" id="submitButton">Update site data</button>
+            </p>
         </form>
     </div>
 
@@ -65,8 +120,16 @@
 </div>
 
 <div class="bottom-text">
-    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span property="cc:attributionName">Ben Rosenberg</span> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/cc_dark.svg" alt=""><img class="by-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg" alt=""></a></p> 
-  </div>
+    <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title"
+            rel="cc:attributionURL" href="https://benrosenberg.info" class="link-problem">benrosenberg.info</a> by <span
+            property="cc:attributionName">Ben Rosenberg</span> is licensed under <a
+            href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank"
+            rel="license noopener noreferrer" style="display:inline-block;" class="link-problem">CC BY 4.0<img
+                class="cc-svg" style="height:20px!important;margin-left:3px;vertical-align:middle;"
+                src="images/cc_dark.svg" alt=""><img class="by-svg"
+                style="height:20px!important;margin-left:3px;vertical-align:middle;" src="images/by_dark.svg"
+                alt=""></a></p>
+</div>
 
 <script>
     function populateDynamicDropdownLists(data) {
@@ -135,9 +198,9 @@
                 var token = document.getElementById('token').value;
                 var content = field.innerText;
                 const response = await fetch(submitURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", "Authentication" : token },
-                body: content,
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authentication": token },
+                    body: content,
                 });
                 console.log("Completed!", response);
                 var responseSuccess = document.getElementById('response-success');
@@ -157,27 +220,62 @@
         })();
     }
 
+    // async function retrieveData() {
+    //     return await fetch(
+    //         // "data.json",
+    //     "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
+    //     { signal: AbortSignal.timeout(2000) }
+    //     )
+    //     .then((response) => {
+    //         if (!response.ok) {
+    //         return response.text().then((text) => {
+    //             throw new Error(text);
+    //         });
+    //         } else {
+    //         return response.json();
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //         alert(
+    //         "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
+    //         );
+    //     });
+    // }
+
+    /**
+ * Asynchronously retrieves data from a local JSON file.
+ * This function attempts to fetch 'leetcode-solutions.json' from the same directory
+ * as the script. It handles potential network or parsing errors gracefully.
+ *
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON data
+ * if the fetch is successful, or undefined
+ * if an error occurs.
+ */
     async function retrieveData() {
-        return await fetch(
-            // "data.json",
-        "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json",
-        { signal: AbortSignal.timeout(2000) }
-        )
-        .then((response) => {
+        try {
+            // Attempt to fetch the local JSON file.
+            const response = await fetch("./leetcode-solutions.json");
+
+            // Check if the HTTP response status is OK (200-299).
             if (!response.ok) {
-            return response.text().then((text) => {
-                throw new Error(text);
-            });
+                // If the response is not OK, read the response body as text
+                // and throw an error with the text content.
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
             } else {
-            return response.json();
+                // If the response is OK, parse the response body as JSON.
+                return await response.json();
             }
-        })
-        .catch((error) => {
-            console.log(error);
-            alert(
-            "Sorry, looks like the host for the data is down right now (took too long to fetch data)"
-            );
-        });
+        } catch (error) {
+            // Catch any errors that occur during the fetch operation (e.g., network issues,
+            // file not found, JSON parsing errors).
+            console.error("Failed to retrieve data from leetcode-solutions.json:", error);
+            // You might want to display a user-friendly message in the UI here,
+            // for example, by updating a DOM element instead of using alert().
+            // Example: document.getElementById('message-area').textContent = 'Error loading data.';
+            return undefined; // Return undefined to indicate that data retrieval failed.
+        }
     }
 
     function capitalizeFirstLetter(string) {
@@ -235,9 +333,9 @@
             title = document.getElementById('problem-title').value;
             var tags = [];
             tagField = document.getElementById('problem-tags').value.split(',').map((tag) => tag.trim()).forEach(element => {
-            if (element.length > 0) {
-                tags.push(element);
-            }
+                if (element.length > 0) {
+                    tags.push(element);
+                }
             });
             difficulty = document.getElementById('problem-difficulty').value;
             date = exists ? problemData.date : document.getElementById('problem-date').value;
@@ -248,19 +346,19 @@
                 solutions = [];
             }
             solutions.push({
-                "date" : document.getElementById('problem-date').value,
-                "solution" : solution,
-                "language" : language
+                "date": document.getElementById('problem-date').value,
+                "solution": solution,
+                "language": language
             });
             minDate = solutions.map((s) => s.date).sort()[0];
             var data = {};
             data[number] = {
-                "number" : number,
-                "title" : title,
-                "tags" : tags,
-                "difficulty" : difficulty,
-                "date" : minDate,
-                "solutions" : solutions
+                "number": number,
+                "title": title,
+                "tags": tags,
+                "difficulty": difficulty,
+                "date": minDate,
+                "solutions": solutions
             };
             output = document.getElementById('output');
             output.innerText = JSON.stringify(data, null, '    ');
@@ -299,9 +397,9 @@
         checkNumberValidity();
     });
 
-    window.onload = function() {
+    window.onload = function () {
         populateDefaults();
-        
+
         const url = new URL(window.location.href);
         const problemID = url.searchParams.get("problem");
         if (problemID != null) {

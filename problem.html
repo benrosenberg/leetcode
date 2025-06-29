@@ -13,6 +13,27 @@
             <span class="theme-toggle"><button class="theme-toggle-button" onclick="toggleColorMode();">toggle theme</button></span>
         </div>
 
+        <div class="static-content-alert" role="alert">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <!-- Info icon (SVG) -->
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="font-bold">Important Update!</p>
+                    <p class="text-sm">
+                        Due to infrequent use, the dynamic server for this site has been permanently decommissioned.
+                        You are now viewing an archived version with static content. Functionality requiring
+                        real-time server interaction may be limited.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <h3 id="difficulty"></h3>
 
         <p id="tags" class="tags"></p>
@@ -46,20 +67,55 @@
         return ctrl.signal
     }
 
+    // async function retrieveData() {
+    //     return await fetch(
+    //         // "data.json"
+    //       "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json"
+    //     , {signal : AbortSignal.timeout(2000)}).then((response) => {
+    //         if (!response.ok) {
+    //         return response.text().then(text => {throw new Error(text)})
+    //         } else {
+    //         return response.json();
+    //         }
+    //     }).catch((error) => {
+    //     console.log(error);
+    //     alert('Sorry, looks like the host for the data is down right now (took too long to fetch data)');
+    //     });
+    // }
+
+        /**
+     * Asynchronously retrieves data from a local JSON file.
+     * This function attempts to fetch 'leetcode-solutions.json' from the same directory
+     * as the script. It handles potential network or parsing errors gracefully.
+     *
+     * @returns {Promise<Object|undefined>} A promise that resolves to the JSON data
+     * if the fetch is successful, or undefined
+     * if an error occurs.
+     */
     async function retrieveData() {
-        return await fetch(
-            // "data.json"
-          "https://68b329da9893e34099c7d8ad5cb9c940.xn--6frz82g/static/leetcode-solutions.json"
-        , {signal : AbortSignal.timeout(2000)}).then((response) => {
+        try {
+            // Attempt to fetch the local JSON file.
+            const response = await fetch("./leetcode-solutions.json");
+
+            // Check if the HTTP response status is OK (200-299).
             if (!response.ok) {
-            return response.text().then(text => {throw new Error(text)})
+                // If the response is not OK, read the response body as text
+                // and throw an error with the text content.
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
             } else {
-            return response.json();
+                // If the response is OK, parse the response body as JSON.
+                return await response.json();
             }
-        }).catch((error) => {
-        console.log(error);
-        alert('Sorry, looks like the host for the data is down right now (took too long to fetch data)');
-        });
+        } catch (error) {
+            // Catch any errors that occur during the fetch operation (e.g., network issues,
+            // file not found, JSON parsing errors).
+            console.error("Failed to retrieve data from leetcode-solutions.json:", error);
+            // You might want to display a user-friendly message in the UI here,
+            // for example, by updating a DOM element instead of using alert().
+            // Example: document.getElementById('message-area').textContent = 'Error loading data.';
+            return undefined; // Return undefined to indicate that data retrieval failed.
+        }
     }
 
     function selectLanguage(event, language) {
